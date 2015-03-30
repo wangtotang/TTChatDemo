@@ -12,6 +12,8 @@ public class User extends BmobUser{
      */
     private static final long serialVersionUID = 1L;
 
+    private String nick;
+
     private String avatar;
     /**
      * //显示数据拼音的首字母
@@ -58,5 +60,13 @@ public class User extends BmobUser{
 
     public void setSortLetters(String sortLetters) {
         this.sortLetters = sortLetters;
+    }
+
+    public String getNick() {
+        return nick;
+    }
+
+    public void setNick(String nick) {
+        this.nick = nick;
     }
 }

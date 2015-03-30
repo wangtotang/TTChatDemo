@@ -35,6 +35,8 @@
         <activity android:name=".RegisterActivity"
                     android:label="@string/app_name"/>
         <activity android:name=".SetMyInfoActivity" />
+        <activity android:name=".UpdateInfoActivity" />
+
     </application>
 
 </manifest>

@@ -1,5 +1,6 @@
 package com.wangtotang.ttchatdemo.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
@@ -97,5 +98,42 @@ public class BaseActivity extends FragmentActivity {
      */
     public void showLog(String msg){
         BmobLog.i(msg);
+    }
+
+
+    public void startAnimActivity(Class<?> cla) {
+        this.startActivity(new Intent(this, cla));
+    }
+
+    public void startAnimActivity(Intent intent) {
+        this.startActivity(intent);
+    }
+
+
+    /**
+     * 初始化标题栏-带左右按钮
+     * @return void
+     * @throws
+     */
+    public void initTopBarForBoth(String titleName, int rightDrawableId,String text,
+                                  HeaderLayout.onRightImageButtonClickListener listener) {
+        mHeaderLayout = (HeaderLayout)findViewById(R.id.common_actionbar);
+        mHeaderLayout.init(HeaderLayout.HeaderStyle.TITLE_DOUBLE_IMAGEBUTTON);
+        mHeaderLayout.setTitleAndLeftImageButton(titleName,
+                R.drawable.base_action_bar_back_bg_selector,
+                new OnLeftButtonClickListener());
+        mHeaderLayout.setTitleAndRightButton(titleName, rightDrawableId,text,
+                listener);
+    }
+
+    public void initTopBarForBoth(String titleName, int rightDrawableId,
+                                  HeaderLayout.onRightImageButtonClickListener listener) {
+        mHeaderLayout = (HeaderLayout)findViewById(R.id.common_actionbar);
+        mHeaderLayout.init(HeaderLayout.HeaderStyle.TITLE_DOUBLE_IMAGEBUTTON);
+        mHeaderLayout.setTitleAndLeftImageButton(titleName,
+                R.drawable.base_action_bar_back_bg_selector,
+                new OnLeftButtonClickListener());
+        mHeaderLayout.setTitleAndRightImageButton(titleName, rightDrawableId,
+                listener);
     }
 }

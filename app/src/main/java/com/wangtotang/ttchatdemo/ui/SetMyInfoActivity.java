@@ -1,5 +1,7 @@
 package com.wangtotang.ttchatdemo.ui;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -111,6 +113,12 @@ public class SetMyInfoActivity extends BaseActivity implements View.OnClickListe
             case R.id.layout_head:
                 showAvatarPop();
                 break;
+            case R.id.layout_nick: //昵称
+                startAnimActivity(UpdateInfoActivity.class);
+                break;
+            case R.id.layout_gender:// 性别
+                showSexChooseDialog();
+                break;
         }
     }
 
@@ -145,6 +153,9 @@ public class SetMyInfoActivity extends BaseActivity implements View.OnClickListe
     private void updateUser(User user) {
         // 更改
         refreshAvatar(user.getAvatar());
+        tv_set_name.setText(user.getUsername());
+        tv_set_nick.setText(user.getNick());
+        tv_set_gender.setText(user.getSex() == true ? "男" : "女");
     }
 
     /**
@@ -403,6 +414,58 @@ public class SetMyInfoActivity extends BaseActivity implements View.OnClickListe
     @Override
     public void onResume() {
         super.onResume();
-        initMeData();
+        if(from.equals("me")) {
+            initMeData();
+        }
+    }
+
+    String[] sexs = new String[]{ "男", "女" };
+    private void showSexChooseDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("单选框")
+                .setIcon(android.R.drawable.ic_dialog_info)
+                .setSingleChoiceItems(sexs, 0,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,
+                                                int which) {
+                                BmobLog.i("点击的是"+sexs[which]);
+                                updateInfo(which);
+                                dialog.dismiss();
+                            }
+                        })
+                .setNegativeButton("取消", null)
+                .show();
+    }
+
+
+    /** 修改资料
+     * updateInfo
+     * @Title: updateInfo
+     * @return void
+     * @throws
+     */
+    private void updateInfo(int which) {
+        final User user = (User)userManager.getCurrentUser(User.class);
+        BmobLog.i("updateInfo 性别："+user.getSex());
+        if(which==0){
+            user.setSex(true);
+        }else{
+            user.setSex(false);
+        }
+        user.update(this, new UpdateListener() {
+
+            @Override
+            public void onSuccess() {
+                showToast("修改成功");
+                final User u = (User)userManager.getCurrentUser(User.class);
+                BmobLog.i("修改成功后的sex = "+u.getSex());
+                tv_set_gender.setText(user.getSex() == true ? "男" : "女");
+            }
+
+            @Override
+            public void onFailure(int arg0, String arg1) {
+                showToast("onFailure:" + arg1);
+            }
+        });
     }
 }
