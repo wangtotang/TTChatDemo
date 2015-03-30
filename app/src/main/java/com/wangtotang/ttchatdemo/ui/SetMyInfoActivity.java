@@ -30,8 +30,10 @@ import com.wangtotang.ttchatdemo.util.PhotoUtil;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import cn.bmob.v3.datatype.BmobFile;
+import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.listener.UploadFileListener;
 
@@ -53,6 +55,7 @@ public class SetMyInfoActivity extends BaseActivity implements View.OnClickListe
     RelativeLayout layout_choose;
     RelativeLayout layout_photo;
     PopupWindow avatorPop;
+    User user;
     public String filePath = "";
 
     @Override
@@ -109,6 +112,39 @@ public class SetMyInfoActivity extends BaseActivity implements View.OnClickListe
                 showAvatarPop();
                 break;
         }
+    }
+
+    private void initMeData() {
+        User user = (User)userManager.getCurrentUser(User.class);
+        initOtherData(user.getUsername());
+    }
+
+    private void initOtherData(String name) {
+        userManager.queryUser(name, new FindListener<User>() {
+
+            @Override
+            public void onError(int arg0, String arg1) {
+                showLog("onError onError:" + arg1);
+            }
+
+            @Override
+            public void onSuccess(List<User> arg0) {
+                if (arg0 != null && arg0.size() > 0) {
+                    user = arg0.get(0);
+                    updateUser(user);
+                    btn_chat.setEnabled(true);
+                    btn_back.setEnabled(true);
+                    btn_add_friend.setEnabled(true);
+                } else {
+                    showLog("onSuccess 查无此人");
+                }
+            }
+        });
+    }
+
+    private void updateUser(User user) {
+        // 更改
+        refreshAvatar(user.getAvatar());
     }
 
     /**
@@ -230,7 +266,6 @@ public class SetMyInfoActivity extends BaseActivity implements View.OnClickListe
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // TODO Auto-generated method stub
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case Config.REQUESTCODE_UPLOADAVATAR_CAMERA:// 拍照修改头像
@@ -272,7 +307,6 @@ public class SetMyInfoActivity extends BaseActivity implements View.OnClickListe
 
                 break;
             case Config.REQUESTCODE_UPLOADAVATAR_CROP:// 裁剪头像返回
-                // TODO sent to crop
                 if (avatorPop != null) {
                     avatorPop.dismiss();
                 }
@@ -296,7 +330,7 @@ public class SetMyInfoActivity extends BaseActivity implements View.OnClickListe
     private void uploadAvatar() {
         BmobLog.i("头像地址：" + path);
         final BmobFile bmobFile = new BmobFile(new File(path));
-        bmobFile.upload(this, new UploadFileListener() {
+        bmobFile.upload(SetMyInfoActivity.this, new UploadFileListener() {
 
             @Override
             public void onSuccess() {
@@ -320,7 +354,7 @@ public class SetMyInfoActivity extends BaseActivity implements View.OnClickListe
     private void updateUserAvatar(final String url) {
         User user = (User) userManager.getCurrentUser(User.class);
         user.setAvatar(url);
-        user.update(this, new UpdateListener() {
+        user.update(SetMyInfoActivity.this, new UpdateListener() {
             @Override
             public void onSuccess() {
                 showToast("头像更新成功！");
@@ -353,7 +387,7 @@ public class SetMyInfoActivity extends BaseActivity implements View.OnClickListe
                 iv_set_avator.setImageBitmap(bitmap);
                 // 保存图片
                 String filename = new SimpleDateFormat("yyMMddHHmmss")
-                        .format(new Date());
+                        .format(new Date())+".jpeg";
                 path = Config.MyAvatarDir + filename;
                 PhotoUtil.saveBitmap(Config.MyAvatarDir, filename,
                         bitmap, true);
@@ -363,5 +397,12 @@ public class SetMyInfoActivity extends BaseActivity implements View.OnClickListe
                 }
             }
         }
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initMeData();
     }
 }

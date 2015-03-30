@@ -6,7 +6,7 @@ import cn.bmob.v3.datatype.BmobGeoPoint;
 /**
  * Created by Wangto Tang on 2015/3/28.
  */
-public class User extends BmobUser {
+public class User extends BmobUser{
     /**
      *
      */
