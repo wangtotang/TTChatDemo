@@ -3,7 +3,7 @@ package com.wangtotang.ttchatdemo.util;
 import android.content.Context;
 import android.content.res.Resources;
 
-import com.wangtotang.ttchatdemo.CustomApplication;
+import com.wangtotang.ttchatdemo.manager.CustomApplication;
 
 /**
  * Created by Wangto Tang on 2015/3/28.

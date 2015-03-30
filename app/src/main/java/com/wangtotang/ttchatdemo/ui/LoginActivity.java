@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.bmob.utils.BmobLog;
+import com.wangtotang.ttchatdemo.bean.User;
 import com.wangtotang.ttchatdemo.config.Config;
 import com.wangtotang.ttchatdemo.util.CommonUtil;
 
@@ -98,7 +99,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         progress.setCanceledOnTouchOutside(false);
         progress.show();
 
-        final BmobUser user = new BmobUser();
+        final User user = new User();
         user.setUsername(username);
         user.setPassword(password);
         user.login(LoginActivity.this, new SaveListener() {

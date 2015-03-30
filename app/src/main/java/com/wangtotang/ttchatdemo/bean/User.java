@@ -11,6 +11,8 @@ public class User extends BmobUser {
      *
      */
     private static final long serialVersionUID = 1L;
+
+    private String avatar;
     /**
      * //显示数据拼音的首字母
      */
@@ -25,6 +27,14 @@ public class User extends BmobUser {
      * 地理坐标
      */
     private BmobGeoPoint location;//
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
 
     public BmobGeoPoint getLocation() {
         return location;

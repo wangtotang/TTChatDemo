@@ -3,8 +3,12 @@ package com.wangtotang.ttchatdemo.ui;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.widget.Toast;
 
+import com.bmob.utils.BmobLog;
+import com.wangtotang.ttchatdemo.manager.CustomApplication;
+import com.wangtotang.ttchatdemo.manager.UserManager;
 import com.wangtotang.ttchatdemo.ui.view.HeaderLayout;
 
 /**
@@ -13,10 +17,20 @@ import com.wangtotang.ttchatdemo.ui.view.HeaderLayout;
 public class BaseActivity extends FragmentActivity {
     protected HeaderLayout mHeaderLayout;
     private Toast mToast;
+    protected UserManager userManager;
+    protected CustomApplication mApplication;
+    protected int mScreenWidth;
+    protected int mScreenHeight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        userManager = UserManager.getInstance();
+        mApplication = CustomApplication.getInstance();
+        DisplayMetrics metric = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metric);
+        mScreenWidth = metric.widthPixels;
+        mScreenHeight = metric.heightPixels;
     }
 
     public void showToast(final String text) {
@@ -73,5 +87,15 @@ public class BaseActivity extends FragmentActivity {
         public void onClick() {
             finish();
         }
+    }
+
+
+    /** 打Log
+     * ShowLog
+     * @return void
+     * @throws
+     */
+    public void showLog(String msg){
+        BmobLog.i(msg);
     }
 }

@@ -1,15 +1,23 @@
 package com.wangtotang.ttchatdemo.config;
 
+import android.os.Environment;
+
 /**
  * Created by Wangto Tang on 2015/3/26.
  */
 public class Config {
     public static String applicationId = "5bc8e0abb17c69b202e203ae58cfe23d";
 
+
+    /**
+     * 存放发送图片的目录
+     */
+    public static String BMOB_PICTURE_PATH = Environment.getExternalStorageDirectory()	+ "/ttchatdemo/image/";
+
     /**
      * 我的头像保存目录
      */
-    public static String MyAvatarDir = "/sdcard/bmobimdemo/avatar/";
+    public static String MyAvatarDir = "/sdcard/ttchatdemo/avatar/";
     /**
      * 拍照回调
      */
