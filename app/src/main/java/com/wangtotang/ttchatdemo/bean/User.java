@@ -1,20 +1,18 @@
 package com.wangtotang.ttchatdemo.bean;
 
-import cn.bmob.v3.BmobUser;
+import cn.bmob.im.bean.BmobChatUser;
 import cn.bmob.v3.datatype.BmobGeoPoint;
 
 /**
  * Created by Wangto Tang on 2015/3/28.
  */
-public class User extends BmobUser{
+public class User extends BmobChatUser{
     /**
      *
      */
     private static final long serialVersionUID = 1L;
 
-    private String nick;
 
-    private String avatar;
     /**
      * //显示数据拼音的首字母
      */
@@ -30,13 +28,6 @@ public class User extends BmobUser{
      */
     private BmobGeoPoint location;//
 
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
 
     public BmobGeoPoint getLocation() {
         return location;
@@ -60,13 +51,5 @@ public class User extends BmobUser{
 
     public void setSortLetters(String sortLetters) {
         this.sortLetters = sortLetters;
-    }
-
-    public String getNick() {
-        return nick;
-    }
-
-    public void setNick(String nick) {
-        this.nick = nick;
     }
 }

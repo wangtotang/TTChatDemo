@@ -12,20 +12,26 @@ import com.bmob.utils.BmobLog;
 import com.wangtotang.ttchatdemo.manager.CustomApplication;
 import com.wangtotang.ttchatdemo.ui.R;
 
+import cn.bmob.im.BmobChatManager;
+import cn.bmob.im.BmobUserManager;
+
 /**
  * Created by Wangto Tang on 2015/3/29.
  */
 public class BaseFragment extends Fragment {
 
+    public CustomApplication mApplication;
+    public BmobUserManager userManager;
+    public BmobChatManager manager;
+
     /**
      * 公用的Header布局
      */
     public HeaderLayout mHeaderLayout;
-    public CustomApplication mApplication;
-    public LayoutInflater mInflater;
     protected View contentView;
+    public LayoutInflater mInflater;
     private Handler handler = new Handler();
-    private Toast mToast;
+    Toast mToast;
 
     public BaseFragment() {
 
@@ -44,11 +50,12 @@ public class BaseFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
         mApplication = CustomApplication.getInstance();
+        userManager = BmobUserManager.getInstance(getActivity());
+        manager = BmobChatManager.getInstance(getActivity());
         mInflater = LayoutInflater.from(getActivity());
     }
 
-
-    public void showToast(String text) {
+    public void ShowToast(String text) {
         if (mToast == null) {
             mToast = Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT);
         } else {
@@ -57,7 +64,7 @@ public class BaseFragment extends Fragment {
         mToast.show();
     }
 
-    public void showToast(int text) {
+    public void ShowToast(int text) {
         if (mToast == null) {
             mToast = Toast.makeText(getActivity(), text, Toast.LENGTH_LONG);
         } else {
@@ -67,14 +74,12 @@ public class BaseFragment extends Fragment {
     }
 
 
-    /**
-     * 打Log
+    /** 打Log
      * ShowLog
-     *
      * @return void
      * @throws
      */
-    public void showLog(String msg) {
+    public void ShowLog(String msg){
         BmobLog.i(msg);
     }
 
@@ -82,14 +87,14 @@ public class BaseFragment extends Fragment {
         return getView().findViewById(paramInt);
     }
 
+
     /**
      * 只有title initTopBarLayoutByTitle
-     *
-     * @throws
      * @Title: initTopBarLayoutByTitle
+     * @throws
      */
     public void initTopBarForOnlyTitle(String titleName) {
-        mHeaderLayout = (HeaderLayout) findViewById(R.id.common_actionbar);
+        mHeaderLayout = (HeaderLayout)findViewById(R.id.common_actionbar);
         mHeaderLayout.init(HeaderLayout.HeaderStyle.DEFAULT_TITLE);
         mHeaderLayout.setDefaultTitle(titleName);
     }
@@ -102,7 +107,7 @@ public class BaseFragment extends Fragment {
      */
     public void initTopBarForBoth(String titleName, int rightDrawableId,
                                   HeaderLayout.onRightImageButtonClickListener listener) {
-        mHeaderLayout = (HeaderLayout) findViewById(R.id.common_actionbar);
+        mHeaderLayout = (HeaderLayout)findViewById(R.id.common_actionbar);
         mHeaderLayout.init(HeaderLayout.HeaderStyle.TITLE_DOUBLE_IMAGEBUTTON);
         mHeaderLayout.setTitleAndLeftImageButton(titleName,
                 R.drawable.base_action_bar_back_bg_selector,
@@ -117,23 +122,21 @@ public class BaseFragment extends Fragment {
      * @throws
      */
     public void initTopBarForLeft(String titleName) {
-        mHeaderLayout = (HeaderLayout) findViewById(R.id.common_actionbar);
+        mHeaderLayout = (HeaderLayout)findViewById(R.id.common_actionbar);
         mHeaderLayout.init(HeaderLayout.HeaderStyle.TITLE_LIFT_IMAGEBUTTON);
         mHeaderLayout.setTitleAndLeftImageButton(titleName,
                 R.drawable.base_action_bar_back_bg_selector,
                 new OnLeftButtonClickListener());
     }
 
-    /**
-     * 右边+title
+    /** 右边+title
      * initTopBarForRight
-     *
      * @return void
      * @throws
      */
-    public void initTopBarForRight(String titleName, int rightDrawableId,
+    public void initTopBarForRight(String titleName,int rightDrawableId,
                                    HeaderLayout.onRightImageButtonClickListener listener) {
-        mHeaderLayout = (HeaderLayout) findViewById(R.id.common_actionbar);
+        mHeaderLayout = (HeaderLayout)findViewById(R.id.common_actionbar);
         mHeaderLayout.init(HeaderLayout.HeaderStyle.TITLE_RIGHT_IMAGEBUTTON);
         mHeaderLayout.setTitleAndRightImageButton(titleName, rightDrawableId,
                 listener);
@@ -142,6 +145,7 @@ public class BaseFragment extends Fragment {
     // 左边按钮的点击事件
     public class OnLeftButtonClickListener implements
             HeaderLayout.onLeftImageButtonClickListener {
+
         @Override
         public void onClick() {
             getActivity().finish();
@@ -150,7 +154,6 @@ public class BaseFragment extends Fragment {
 
     /**
      * 动画启动页面 startAnimActivity
-     *
      * @throws
      */
     public void startAnimActivity(Intent intent) {
