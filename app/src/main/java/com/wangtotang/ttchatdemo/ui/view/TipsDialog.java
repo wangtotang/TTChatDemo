@@ -23,7 +23,6 @@ public class TipsDialog extends BaseDialog{
 
     /**下线通知的对话框样式
      * @param context
-     * @param title
      * @param message
      * @param buttonText
      */

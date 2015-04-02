@@ -1,8 +1,5 @@
 package com.wangtotang.ttchatdemo.ui;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,15 +7,20 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.wangtotang.ttchatdemo.R;
+import com.wangtotang.ttchatdemo.adapter.AddFriendAdapter;
+import com.wangtotang.ttchatdemo.ui.view.MyListView;
+import com.wangtotang.ttchatdemo.util.CollectionUtil;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import cn.bmob.im.bean.BmobChatUser;
 import cn.bmob.im.task.BRequest;
 import cn.bmob.im.util.BmobLog;
 import cn.bmob.v3.listener.CountListener;
 import cn.bmob.v3.listener.FindListener;
-
-import com.wangtotang.ttchatdemo.adapter.AddFriendAdapter;
-import com.wangtotang.ttchatdemo.ui.view.MyListView;
-import com.wangtotang.ttchatdemo.util.CollectionUtil;
 
 
 /**

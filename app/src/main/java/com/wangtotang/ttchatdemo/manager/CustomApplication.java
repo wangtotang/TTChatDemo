@@ -12,7 +12,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.utils.StorageUtils;
-import com.wangtotang.ttchatdemo.ui.R;
+import com.wangtotang.ttchatdemo.R;
 import com.wangtotang.ttchatdemo.util.CollectionUtil;
 import com.wangtotang.ttchatdemo.util.SharePreferenceUtil;
 
@@ -50,6 +50,7 @@ public class CustomApplication extends Application {
             // 获取本地好友user list到内存,方便以后获取好友list
             contactList = CollectionUtil.list2map(BmobDB.create(getApplicationContext()).getContactList());
         }
+        initBaidu();
     }
 
     /** 初始化ImageLoader */
@@ -133,5 +134,19 @@ public class CustomApplication extends Application {
     public void logout() {
         BmobUserManager.getInstance(getApplicationContext()).logout();
         setContactList(null);
+    }
+
+    /**
+     * 初始化百度相关sdk initBaidumap
+     * @Title: initBaidumap
+     * @Description: TODO
+     * @param
+     * @return void
+     * @throws
+     */
+    private void initBaidu() {
+        // 初始化地图Sdk
+        //SDKInitializer.initialize(getApplicationContext());
+        // 初始化定位sdk
     }
 }

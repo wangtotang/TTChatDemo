@@ -9,7 +9,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.wangtotang.ttchatdemo.ui.R;
+import com.wangtotang.ttchatdemo.R;
 import com.wangtotang.ttchatdemo.util.PixelUtil;
 
 /**

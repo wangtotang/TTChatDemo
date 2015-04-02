@@ -7,8 +7,7 @@ import android.media.MediaPlayer;
 import android.view.View;
 import android.widget.ImageView;
 
-
-import com.wangtotang.ttchatdemo.ui.R;
+import com.wangtotang.ttchatdemo.R;
 
 import java.io.File;
 import java.io.FileInputStream;

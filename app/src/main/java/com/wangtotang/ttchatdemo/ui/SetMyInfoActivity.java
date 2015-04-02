@@ -25,6 +25,7 @@ import android.widget.TextView;
 
 import com.bmob.utils.BmobLog;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.wangtotang.ttchatdemo.R;
 import com.wangtotang.ttchatdemo.bean.User;
 import com.wangtotang.ttchatdemo.config.Config;
 import com.wangtotang.ttchatdemo.manager.CustomApplication;

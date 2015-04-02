@@ -1,21 +1,21 @@
 package com.wangtotang.ttchatdemo.receiver;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.json.JSONObject;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 
+import com.wangtotang.ttchatdemo.R;
 import com.wangtotang.ttchatdemo.manager.CustomApplication;
 import com.wangtotang.ttchatdemo.ui.MainActivity;
 import com.wangtotang.ttchatdemo.ui.NewFriendActivity;
-import com.wangtotang.ttchatdemo.ui.R;
 import com.wangtotang.ttchatdemo.util.CollectionUtil;
 import com.wangtotang.ttchatdemo.util.CommonUtil;
+
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import cn.bmob.im.BmobChatManager;
 import cn.bmob.im.BmobNotifyManager;

@@ -12,7 +12,7 @@ import android.view.animation.CycleInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.EditText;
 
-import com.wangtotang.ttchatdemo.ui.R;
+import com.wangtotang.ttchatdemo.R;
 
 /**
  * Created by Wangto Tang on 2015/3/29.

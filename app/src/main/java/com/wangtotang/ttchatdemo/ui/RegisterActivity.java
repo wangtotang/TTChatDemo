@@ -10,9 +10,11 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.bmob.utils.BmobLog;
+import com.wangtotang.ttchatdemo.R;
 import com.wangtotang.ttchatdemo.bean.User;
 import com.wangtotang.ttchatdemo.config.Config;
 import com.wangtotang.ttchatdemo.util.CommonUtil;
+
 import cn.bmob.v3.BmobInstallation;
 import cn.bmob.v3.listener.SaveListener;
 

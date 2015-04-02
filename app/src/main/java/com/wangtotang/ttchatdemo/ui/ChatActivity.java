@@ -1,9 +1,5 @@
 package com.wangtotang.ttchatdemo.ui;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -43,6 +39,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.wangtotang.ttchatdemo.R;
 import com.wangtotang.ttchatdemo.adapter.EmoViewPagerAdapter;
 import com.wangtotang.ttchatdemo.adapter.EmoteAdapter;
 import com.wangtotang.ttchatdemo.adapter.MessageChatAdapter;
@@ -56,6 +53,10 @@ import com.wangtotang.ttchatdemo.ui.view.MyListView;
 import com.wangtotang.ttchatdemo.ui.view.TipsDialog;
 import com.wangtotang.ttchatdemo.util.CommonUtil;
 import com.wangtotang.ttchatdemo.util.FaceTextUtil;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import cn.bmob.im.BmobChatManager;
 import cn.bmob.im.BmobNotifyManager;

@@ -10,9 +10,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.wangtotang.ttchatdemo.R;
 import com.wangtotang.ttchatdemo.manager.CustomApplication;
 import com.wangtotang.ttchatdemo.ui.LoginActivity;
-import com.wangtotang.ttchatdemo.ui.R;
 import com.wangtotang.ttchatdemo.ui.SetMyInfoActivity;
 
 /**

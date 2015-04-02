@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
+import com.wangtotang.ttchatdemo.R;
 import com.wangtotang.ttchatdemo.config.Config;
 
 import cn.bmob.im.BmobChat;

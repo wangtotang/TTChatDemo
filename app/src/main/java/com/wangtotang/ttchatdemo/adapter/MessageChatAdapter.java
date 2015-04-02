@@ -1,10 +1,5 @@
 package com.wangtotang.ttchatdemo.adapter;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -15,11 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import cn.bmob.im.BmobDownloadManager;
-import cn.bmob.im.BmobUserManager;
-import cn.bmob.im.bean.BmobMsg;
-import cn.bmob.im.config.BmobConfig;
-import cn.bmob.im.inteface.DownloadListener;
+
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -27,13 +18,24 @@ import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+import com.wangtotang.ttchatdemo.R;
 import com.wangtotang.ttchatdemo.listener.RecordPlayClickListener;
 import com.wangtotang.ttchatdemo.ui.ImageBrowserActivity;
-import com.wangtotang.ttchatdemo.ui.R;
 import com.wangtotang.ttchatdemo.ui.SetMyInfoActivity;
 import com.wangtotang.ttchatdemo.util.FaceTextUtil;
 import com.wangtotang.ttchatdemo.util.ImageLoadOptions;
 import com.wangtotang.ttchatdemo.util.TimeUtil;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+
+import cn.bmob.im.BmobDownloadManager;
+import cn.bmob.im.BmobUserManager;
+import cn.bmob.im.bean.BmobMsg;
+import cn.bmob.im.config.BmobConfig;
+import cn.bmob.im.inteface.DownloadListener;
 
 /**
  * Created by Wangto Tang on 2015/3/31.

@@ -11,13 +11,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.wangtotang.ttchatdemo.R;
 import com.wangtotang.ttchatdemo.manager.CustomApplication;
 import com.wangtotang.ttchatdemo.receiver.MyMessageReceiver;
 import com.wangtotang.ttchatdemo.ui.view.ContactFragment;
 import com.wangtotang.ttchatdemo.ui.view.FindFragment;
 import com.wangtotang.ttchatdemo.ui.view.RecentFragment;
 import com.wangtotang.ttchatdemo.ui.view.SettingFragment;
-
 
 import cn.bmob.im.BmobChat;
 import cn.bmob.im.BmobChatManager;

@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.wangtotang.ttchatdemo.R;
 import com.wangtotang.ttchatdemo.adapter.NewFriendAdapter;
 import com.wangtotang.ttchatdemo.ui.view.TipsDialog;
 

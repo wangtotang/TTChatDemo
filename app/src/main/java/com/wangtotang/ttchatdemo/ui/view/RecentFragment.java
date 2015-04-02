@@ -11,9 +11,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.wangtotang.ttchatdemo.R;
 import com.wangtotang.ttchatdemo.adapter.MessageRecentAdapter;
 import com.wangtotang.ttchatdemo.ui.ChatActivity;
-import com.wangtotang.ttchatdemo.ui.R;
 
 import cn.bmob.im.bean.BmobChatUser;
 import cn.bmob.im.bean.BmobRecent;

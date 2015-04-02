@@ -3,6 +3,7 @@ package com.wangtotang.ttchatdemo.ui;
 import android.os.Bundle;
 import android.widget.EditText;
 
+import com.wangtotang.ttchatdemo.R;
 import com.wangtotang.ttchatdemo.bean.User;
 import com.wangtotang.ttchatdemo.ui.view.HeaderLayout;
 
@@ -16,7 +17,6 @@ public class UpdateInfoActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_updateinfo);
         initView();

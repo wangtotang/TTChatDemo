@@ -6,8 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.wangtotang.ttchatdemo.R;
 import com.wangtotang.ttchatdemo.bean.FaceText;
-import com.wangtotang.ttchatdemo.ui.R;
 
 import java.util.List;
 

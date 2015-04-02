@@ -12,7 +12,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Scroller;
 
-import com.wangtotang.ttchatdemo.ui.R;
+import com.wangtotang.ttchatdemo.R;
 
 
 /**

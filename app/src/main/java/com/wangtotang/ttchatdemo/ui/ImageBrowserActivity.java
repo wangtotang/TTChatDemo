@@ -14,6 +14,7 @@ import android.widget.ProgressBar;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+import com.wangtotang.ttchatdemo.R;
 import com.wangtotang.ttchatdemo.ui.view.CustomViewPager;
 import com.wangtotang.ttchatdemo.util.ImageLoadOptions;
 

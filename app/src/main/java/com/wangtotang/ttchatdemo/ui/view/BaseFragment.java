@@ -9,8 +9,8 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.bmob.utils.BmobLog;
+import com.wangtotang.ttchatdemo.R;
 import com.wangtotang.ttchatdemo.manager.CustomApplication;
-import com.wangtotang.ttchatdemo.ui.R;
 
 import cn.bmob.im.BmobChatManager;
 import cn.bmob.im.BmobUserManager;

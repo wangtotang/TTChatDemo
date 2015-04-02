@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.wangtotang.ttchatdemo.ui.R;
+import com.wangtotang.ttchatdemo.R;
 import com.wangtotang.ttchatdemo.util.FaceTextUtil;
 import com.wangtotang.ttchatdemo.util.ImageLoadOptions;
 import com.wangtotang.ttchatdemo.util.TimeUtil;

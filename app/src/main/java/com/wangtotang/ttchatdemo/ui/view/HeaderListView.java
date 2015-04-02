@@ -13,7 +13,8 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.wangtotang.ttchatdemo.ui.R;
+import com.wangtotang.ttchatdemo.R;
+
 
 /**
  * Created by Wangto Tang on 2015/3/31.

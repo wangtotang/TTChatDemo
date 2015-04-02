@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.widget.Toast;
 
+import com.wangtotang.ttchatdemo.R;
 import com.wangtotang.ttchatdemo.manager.CustomApplication;
 import com.wangtotang.ttchatdemo.ui.view.HeaderLayout;
 import com.wangtotang.ttchatdemo.ui.view.TipsDialog;

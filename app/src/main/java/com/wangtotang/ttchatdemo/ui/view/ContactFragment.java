@@ -1,10 +1,5 @@
 package com.wangtotang.ttchatdemo.ui.view;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -30,16 +25,21 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.wangtotang.ttchatdemo.R;
 import com.wangtotang.ttchatdemo.adapter.UserFriendAdapter;
 import com.wangtotang.ttchatdemo.bean.User;
 import com.wangtotang.ttchatdemo.manager.CustomApplication;
 import com.wangtotang.ttchatdemo.ui.AddFriendActivity;
 import com.wangtotang.ttchatdemo.ui.NewFriendActivity;
-import com.wangtotang.ttchatdemo.ui.R;
 import com.wangtotang.ttchatdemo.ui.SetMyInfoActivity;
 import com.wangtotang.ttchatdemo.util.CharacterParser;
 import com.wangtotang.ttchatdemo.util.CollectionUtil;
 import com.wangtotang.ttchatdemo.util.PinyinComparator;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 import cn.bmob.im.bean.BmobChatUser;
 import cn.bmob.im.db.BmobDB;
@@ -73,8 +73,8 @@ public class ContactFragment extends BaseFragment implements OnItemClickListener
     private PinyinComparator pinyinComparator;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+     public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_contacts, container, false);
     }
 
@@ -155,7 +155,6 @@ public class ContactFragment extends BaseFragment implements OnItemClickListener
 
     /**
      * 为ListView填充数据
-     * @param date
      * @return
      */
     private void filledData(List<BmobChatUser> datas) {
@@ -194,19 +193,16 @@ public class ContactFragment extends BaseFragment implements OnItemClickListener
     ImageView iv_msg_tips;
     TextView tv_new_name;
     LinearLayout layout_new;//新朋友
-    LinearLayout layout_near;//附近的人
 
     private void initListView() {
         list_friends= (ListView)findViewById(R.id.list_friends);
         RelativeLayout headView = (RelativeLayout) mInflater.inflate(R.layout.include_new_friend, null);
         iv_msg_tips = (ImageView)headView.findViewById(R.id.iv_msg_tips);
         layout_new =(LinearLayout)headView.findViewById(R.id.layout_new);
-        layout_near =(LinearLayout)headView.findViewById(R.id.layout_near);
         layout_new.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View arg0) {
-                // TODO Auto-generated method stub
                 Intent intent = new Intent(getActivity(), NewFriendActivity.class);
                 intent.putExtra("from", "contact");
                 startAnimActivity(intent);
@@ -237,7 +233,6 @@ public class ContactFragment extends BaseFragment implements OnItemClickListener
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
-        // TODO Auto-generated method stub
         if (isVisibleToUser) {
             queryMyfriends();
         }
@@ -324,7 +319,6 @@ public class ContactFragment extends BaseFragment implements OnItemClickListener
 
     @Override
     public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-        // TODO Auto-generated method stub
         User user = (User) userAdapter.getItem(position-1);
         //先进入好友的详细资料页面
         Intent intent =new Intent(getActivity(),SetMyInfoActivity.class);

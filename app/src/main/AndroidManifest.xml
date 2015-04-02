@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.wangtotang.ttchatdemo.ui" >
+    package="com.wangtotang.ttchatdemo" >
 
 
     <!-- normal permission -->
     <uses-permission android:name="android.permission.INTERNET" /> <!-- 允许应用打开网络套接口 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_LOGS" />
     <!-- BmobPush SDK权限 -->
-    <permission android:protectionLevel="normal" android:name="cn.bmob.permission.push"></permission>
+    <permission android:protectionLevel="normal" android:name="cn.bmob.permission.push"/>
     <uses-permission android:name="cn.bmob.permission.push"/><!-- 添加自定义的权限-->
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT"/>
 
     <!-- UIL框架所需的权限 -->
@@ -21,30 +19,49 @@
     <!-- 通知震动权限 -->
     <uses-permission android:name="android.permission.VIBRATE" />
 
-    <uses-permission android:name="android.permission.CAMERA" >
-    </uses-permission>
-    <uses-permission android:name="android.permission.RECORD_AUDIO" >
-    </uses-permission>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" >
-    </uses-permission>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.BROADCAST_STICKY" />
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <!-- 来电消音 -->
-    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" >
-    </uses-permission>
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 
 
+    <!-- baidumap 所需的权限 -start -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.BAIDU_LOCATION_SERVICE" />
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+    <uses-permission android:name="android.permission.ACCESS_GPS" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.BROADCAST_STICKY" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+
+    <!-- 这个权限用于进行网络定位-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <!-- 这个权限用于访问GPS定位-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位-->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <!-- 用于读取手机当前的状态-->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <!-- baidumap 所需的权限 -end -->
     <application
-        android:name="com.wangtotang.ttchatdemo.manager.CustomApplication"
+        android:name=".manager.CustomApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
 
         <activity
-            android:name="SplashActivity"
+            android:name=".ui.SplashActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -53,34 +70,36 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="MainActivity"
+            android:name=".ui.MainActivity"
             android:launchMode="singleTask"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
 
 
-        <activity android:name="LoginActivity" />
+        <activity android:name=".ui.LoginActivity" />
 
 
 
-        <activity android:name="ImageBrowserActivity" />
+        <activity android:name=".ui.ImageBrowserActivity" />
 
         <activity
-            android:name="AddFriendActivity"
+            android:name=".ui.AddFriendActivity"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
-        <activity android:name="NewFriendActivity" />
+        <activity android:name=".ui.NewFriendActivity" />
 
-        <activity android:name="UpdateInfoActivity" />
+        <activity android:name=".ui.UpdateInfoActivity" />
 
         <activity
-            android:name="ChatActivity"
+            android:name=".ui.ChatActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
 
-        <activity android:name="SetMyInfoActivity" />
+        <activity android:name=".ui.SetMyInfoActivity" />
 
         <activity
-            android:name="RegisterActivity"
+            android:name=".ui.RegisterActivity"
             android:label="@string/app_name" />
+
+        <activity android:name=".ui.ShakeActivity" />
 
         <!-- IM聊天所需的Push start-->
         <service
@@ -104,7 +123,7 @@
             </intent-filter>
         </receiver>
         <!-- 创建的消息接收器 -->
-        <receiver android:name="com.wangtotang.ttchatdemo.receiver.MyMessageReceiver" >
+        <receiver android:name="receiver.MyMessageReceiver" >
             <intent-filter>
                 <action android:name="cn.bmob.push.action.MESSAGE" />
             </intent-filter>
@@ -117,6 +136,11 @@
                 <action android:name="cn.bmob.im.service.BmobPollService"/>
             </intent-filter>
         </service>
+
+        <!-- baidu map-->
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="oBwOzTjFAzfe9v2YwG0KA1mV" />
     </application>
 
 </manifest>

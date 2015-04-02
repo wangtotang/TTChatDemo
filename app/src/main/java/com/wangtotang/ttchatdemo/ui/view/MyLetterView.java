@@ -11,7 +11,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 
-import com.wangtotang.ttchatdemo.ui.R;
+import com.wangtotang.ttchatdemo.R;
 import com.wangtotang.ttchatdemo.util.PixelUtil;
 
 /**
