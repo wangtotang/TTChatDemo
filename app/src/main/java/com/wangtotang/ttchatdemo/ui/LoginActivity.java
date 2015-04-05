@@ -110,7 +110,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         progress.setMessage("正在获取好友列表...");
                     }
                 });
-                //更新用户的地理位置以及好友的资料
+                //更新用户的好友的资料
                 updateUserInfos();
                 progress.dismiss();
                 Intent intent = new Intent(LoginActivity.this,MainActivity.class);

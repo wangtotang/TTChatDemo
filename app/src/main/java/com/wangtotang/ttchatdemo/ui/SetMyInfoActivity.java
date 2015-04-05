@@ -156,7 +156,6 @@ public class SetMyInfoActivity extends CheckActivity implements View.OnClickList
                 break;
             case R.id.layout_nick:
                 startAnimActivity(UpdateInfoActivity.class);
-//			addBlog();
                 break;
             case R.id.layout_gender:// 性别
                 showSexChooseDialog();

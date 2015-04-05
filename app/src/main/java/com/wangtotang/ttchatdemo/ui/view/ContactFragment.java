@@ -363,7 +363,7 @@ public class ContactFragment extends BaseFragment implements OnItemClickListener
 
             @Override
             public void onSuccess() {
-                ShowToast("删除成功");
+                showToast("删除成功");
                 //删除内存
                 CustomApplication.getInstance().getContactList().remove(user.getUsername());
                 //更新界面
@@ -377,7 +377,7 @@ public class ContactFragment extends BaseFragment implements OnItemClickListener
 
             @Override
             public void onFailure(int arg0, String arg1) {
-                ShowToast("删除失败："+arg1);
+                showToast("删除失败："+arg1);
                 progress.dismiss();
             }
         });

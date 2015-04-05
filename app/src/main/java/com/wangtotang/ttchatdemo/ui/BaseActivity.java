@@ -182,6 +182,7 @@ public class BaseActivity extends FragmentActivity {
     public void startAnimActivity(Intent intent) {
         this.startActivity(intent);
     }
+
     /** 用于登陆或者自动登陆情况下的用户资料及好友资料的检测更新
      * @Title: updateUserInfos
      * @Description: TODO

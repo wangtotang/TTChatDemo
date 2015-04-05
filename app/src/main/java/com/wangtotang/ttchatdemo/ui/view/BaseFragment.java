@@ -55,7 +55,7 @@ public class BaseFragment extends Fragment {
         mInflater = LayoutInflater.from(getActivity());
     }
 
-    public void ShowToast(String text) {
+    public void showToast(String text) {
         if (mToast == null) {
             mToast = Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT);
         } else {
@@ -64,7 +64,7 @@ public class BaseFragment extends Fragment {
         mToast.show();
     }
 
-    public void ShowToast(int text) {
+    public void showToast(int text) {
         if (mToast == null) {
             mToast = Toast.makeText(getActivity(), text, Toast.LENGTH_LONG);
         } else {
@@ -79,7 +79,7 @@ public class BaseFragment extends Fragment {
      * @return void
      * @throws
      */
-    public void ShowLog(String msg){
+    public void showLog(String msg){
         BmobLog.i(msg);
     }
 

@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.media.MediaPlayer;
 
+import com.baidu.mapapi.SDKInitializer;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
@@ -146,7 +147,6 @@ public class CustomApplication extends Application {
      */
     private void initBaidu() {
         // 初始化地图Sdk
-        //SDKInitializer.initialize(getApplicationContext());
-        // 初始化定位sdk
+        SDKInitializer.initialize(getApplicationContext());
     }
 }

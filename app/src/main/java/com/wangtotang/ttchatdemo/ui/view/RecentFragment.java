@@ -84,7 +84,6 @@ public class RecentFragment extends BaseFragment implements AdapterView.OnItemCl
     @Override
     public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int position,
                                    long arg3) {
-        // TODO Auto-generated method stub
         BmobRecent recent = adapter.getItem(position);
         showDeleteDialog(recent);
         return true;
@@ -105,7 +104,6 @@ public class RecentFragment extends BaseFragment implements AdapterView.OnItemCl
 
     @Override
     public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-        // TODO Auto-generated method stub
         BmobRecent recent = adapter.getItem(position);
         //重置未读消息
         BmobDB.create(getActivity()).resetUnread(recent.getTargetid());
