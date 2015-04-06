@@ -241,7 +241,6 @@ public class ChatActivity extends CheckActivity implements OnClickListener,
                             }
                         }
                     } catch (Exception e) {
-                        // TODO: handle exception
                     }
                     return true;
                 default:

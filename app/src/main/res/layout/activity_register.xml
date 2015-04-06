@@ -3,11 +3,85 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/theme_bg_color"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:id="@+id/layout_register">
 
     <include
         android:id="@+id/common_actionbar"
         layout="@layout/include_action_bar" />
+
+    <LinearLayout android:layout_height="88dp"
+        style="@style/Register_Input">
+
+        <TextView
+            style="@style/Smile.TextView._Black"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:text="@string/login_avator"
+            android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/iv_avatar"
+                style="@style/Smile.ImageView"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginLeft="40dp"
+                android:src="@drawable/default_head"
+                android:clickable="true"/>
+
+    </LinearLayout>
+
+    <LinearLayout style="@style/Register_Input" >
+
+        <TextView
+            style="@style/Smile.TextView._Black"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:text="@string/login_gender"
+            android:textStyle="bold" />
+        <RadioGroup
+            android:id="@+id/rg_gender"
+            android:contentDescription="性别"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rb_gender_female"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="女"
+                android:checked="true"
+                android:layout_marginLeft="20dp"/>
+
+            <RadioButton
+                android:id="@+id/rb_gender_male"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="男"
+                android:layout_marginLeft="20dp"/>
+
+        </RadioGroup>
+    </LinearLayout>
+
+    <LinearLayout style="@style/Register_Input" >
+
+        <TextView
+            style="@style/Smile.TextView._Black"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:text="@string/login_nick"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/et_nick"
+            style="@style/Register_Edit"
+            android:hint="@string/login_nick_hint" />
+    </LinearLayout>
 
     <LinearLayout style="@style/Register_Input" >
 
@@ -42,8 +116,7 @@
             android:hint="@string/login_password_hint" />
     </LinearLayout>
 
-    <LinearLayout
-        style="@style/Register_Input" >
+    <LinearLayout style="@style/Register_Input" >
 
         <TextView
             style="@style/Smile.TextView._Black"

@@ -65,7 +65,7 @@ public class RecordPlayClickListener implements View.OnClickListener {
         AudioManager audioManager = (AudioManager) context
                 .getSystemService(Context.AUDIO_SERVICE);
         mediaPlayer = new MediaPlayer();
-        if (isUseSpeaker) {
+        if (!isUseSpeaker) {
             audioManager.setMode(AudioManager.MODE_NORMAL);
             audioManager.setSpeakerphoneOn(true);
             mediaPlayer.setAudioStreamType(AudioManager.STREAM_RING);
@@ -121,8 +121,7 @@ public class RecordPlayClickListener implements View.OnClickListener {
                     startRecordAnimation();
                 }
             });
-            mediaPlayer
-                    .setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
 
                         @Override
                         public void onCompletion(MediaPlayer mp) {
@@ -167,6 +166,7 @@ public class RecordPlayClickListener implements View.OnClickListener {
      * @return void
      * @throws
      */
+    @SuppressWarnings("resource")
     private void startRecordAnimation() {
         if (message.getBelongId().equals(currentObjectId)) {
             iv_voice.setImageResource(R.anim.anim_chat_voice_right);

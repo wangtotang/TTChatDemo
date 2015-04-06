@@ -86,7 +86,7 @@ public class UserFriendAdapter extends BaseAdapter implements SectionIndexer {
         if (!TextUtils.isEmpty(avatar)) {
             ImageLoader.getInstance().displayImage(avatar, viewHolder.avatar, ImageLoadOptions.getOptions());
         } else {
-            viewHolder.avatar.setImageDrawable(ct.getResources().getDrawable(R.drawable.head));
+            viewHolder.avatar.setImageDrawable(ct.getResources().getDrawable(R.drawable.default_head));
         }
         viewHolder.name.setText(name);
 

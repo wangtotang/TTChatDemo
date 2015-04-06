@@ -125,7 +125,6 @@ public class MessageChatAdapter extends BaseListAdapter<BmobMsg>{
 
     @Override
     public View bindView(final int position, View convertView, ViewGroup parent) {
-        // TODO Auto-generated method stub
         final BmobMsg item = list.get(position);
         if (convertView == null) {
             convertView = createViewByType(item, position);
@@ -151,7 +150,7 @@ public class MessageChatAdapter extends BaseListAdapter<BmobMsg>{
         if(avatar!=null && !avatar.equals("")){//加载头像-为了不每次都加载头像
             ImageLoader.getInstance().displayImage(avatar, iv_avatar, ImageLoadOptions.getOptions(),animateFirstListener);
         }else{
-            iv_avatar.setImageResource(R.drawable.head);
+            iv_avatar.setImageResource(R.drawable.default_head);
         }
 
         iv_avatar.setOnClickListener(new OnClickListener() {

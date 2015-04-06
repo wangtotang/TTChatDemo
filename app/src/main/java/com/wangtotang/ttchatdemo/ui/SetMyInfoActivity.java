@@ -545,19 +545,19 @@ public class SetMyInfoActivity extends CheckActivity implements View.OnClickList
         progress.setCanceledOnTouchOutside(false);
         progress.show();
         // 发送tag请求
-        BmobChatManager.getInstance(this).sendTagMessage(BmobConfig.TAG_ADD_CONTACT,
+        BmobChatManager.getInstance(this).sendTagMessage(BmobConfig.TAG_ADD_AGREE,
                 user.getObjectId(), new PushListener() {
 
                     @Override
                     public void onSuccess() {
                         progress.dismiss();
-                        showToast("发送请求成功，等待对方验证！");
+                       BmobDB.create(SetMyInfoActivity.this).saveContact(user);
                     }
 
                     @Override
                     public void onFailure(int arg0, final String arg1) {
                         progress.dismiss();
-                        showToast("发送请求成功，等待对方验证！");
+                        //showToast("发送请求成功，等待对方验证！");
                         showLog("发送请求失败:" + arg1);
                     }
                 });

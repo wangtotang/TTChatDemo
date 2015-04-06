@@ -78,7 +78,6 @@ public class AddFriendActivity extends CheckActivity implements View.OnClickList
 
             @Override
             public void onError(int arg0, String arg1) {
-                // TODO Auto-generated method stub
                 BmobLog.i("查询错误:"+arg1);
                 if(users!=null){
                     users.clear();
