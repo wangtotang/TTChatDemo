@@ -32,4 +32,20 @@ public class Config {
 
 
     public static final String ACTION_REGISTER_SUCCESS_FINISH ="register.success.finish";//注册成功之后登陆页面退出
+
+
+    //游戏规模
+    public static int SIZE = 3;
+
+    public static int panelBG = 0xff7accc8;
+    //方块移动耗时
+    public static int MOVE_TIME = 1000;
+
+    //表示四个移动方向
+    public static final int UP = 0;
+    public static final int LEFT = 1;
+    public static final int DOWN = 2;
+    public static final int RIGHT = 3;
+    public static final int UNMOVABLE = -1;
+
 }

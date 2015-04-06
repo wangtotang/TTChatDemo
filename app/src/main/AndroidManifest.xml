@@ -103,6 +103,8 @@
 
         <activity android:name=".ui.ShakeActivity" />
 
+        <activity android:name=".ui.GameActivity"/>
+
         <!-- IM聊天所需的Push start-->
         <service
             android:label="PushService"

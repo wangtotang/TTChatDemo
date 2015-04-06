@@ -29,7 +29,7 @@ import com.baidu.mapapi.map.TextOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.wangtotang.ttchatdemo.R;
 import com.wangtotang.ttchatdemo.bean.User;
-import com.wangtotang.ttchatdemo.ui.SetMyInfoActivity;
+import com.wangtotang.ttchatdemo.ui.GameActivity;
 import com.wangtotang.ttchatdemo.util.CollectionUtil;
 
 import java.util.List;
@@ -207,7 +207,11 @@ public class MapManager {
                         userManager.queryUserByName(name,new FindListener<BmobChatUser>() {
                             @Override
                             public void onSuccess(List<BmobChatUser> bmobChatUsers) {
-                                Intent intent =new Intent(mContext,SetMyInfoActivity.class);
+                                /*Intent intent =new Intent(mContext,SetMyInfoActivity.class);
+                                intent.putExtra("from", "add");
+                                intent.putExtra("username", name);
+                                mContext.startActivity(intent);*/
+                                Intent intent = new Intent(mContext,GameActivity.class);
                                 intent.putExtra("from", "add");
                                 intent.putExtra("username", name);
                                 mContext.startActivity(intent);
