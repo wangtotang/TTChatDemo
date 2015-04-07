@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import com.baidu.mapapi.map.MapView;
 import com.wangtotang.ttchatdemo.R;
 import com.wangtotang.ttchatdemo.listener.ShakeListener;
+import com.wangtotang.ttchatdemo.manager.CustomApplication;
 import com.wangtotang.ttchatdemo.manager.MapManager;
 
 /**
@@ -43,7 +44,6 @@ public class ShakeActivity extends CheckActivity{
                     @Override
                     public void run(){
                         mVibrator.cancel();
-                        //mShakeListener.start();
                     }
                 }, 2000);
             }
@@ -63,11 +63,7 @@ public class ShakeActivity extends CheckActivity{
         AnimationSet animup = new AnimationSet(true);
         TranslateAnimation mytranslateanimup0 = new TranslateAnimation(Animation.RELATIVE_TO_SELF,0f,Animation.RELATIVE_TO_SELF,0f,Animation.RELATIVE_TO_SELF,0f,Animation.RELATIVE_TO_SELF,-1.0f);
         mytranslateanimup0.setDuration(1000);
-        //TranslateAnimation mytranslateanimup1 = new TranslateAnimation(Animation.RELATIVE_TO_SELF,0f,Animation.RELATIVE_TO_SELF,0f,Animation.RELATIVE_TO_SELF,0f,Animation.RELATIVE_TO_SELF,+0.5f);
-        //mytranslateanimup1.setDuration(1000);
-        //mytranslateanimup1.setStartOffset(1000);
         animup.addAnimation(mytranslateanimup0);
-        //animup.addAnimation(mytranslateanimup1);
         mImgUp.startAnimation(animup);
         mImgUp.setVisibility(View.GONE);
 
@@ -75,18 +71,17 @@ public class ShakeActivity extends CheckActivity{
         AnimationSet animdn = new AnimationSet(true);
         TranslateAnimation mytranslateanimdn0 = new TranslateAnimation(Animation.RELATIVE_TO_SELF,0f,Animation.RELATIVE_TO_SELF,0f,Animation.RELATIVE_TO_SELF,0f,Animation.RELATIVE_TO_SELF,+1.0f);
         mytranslateanimdn0.setDuration(1000);
-        //TranslateAnimation mytranslateanimdn1 = new TranslateAnimation(Animation.RELATIVE_TO_SELF,0f,Animation.RELATIVE_TO_SELF,0f,Animation.RELATIVE_TO_SELF,0f,Animation.RELATIVE_TO_SELF,-1.0f);
-        //mytranslateanimdn1.setDuration(1000);
-        //mytranslateanimdn1.setStartOffset(1000);
         animdn.addAnimation(mytranslateanimdn0);
-        //animdn.addAnimation(mytranslateanimdn1);
         mImgDn.startAnimation(animdn);
         mImgDn.setVisibility(View.GONE);
 
     }
 
     public void startVibrato(){		//定义震动
-        mVibrator.vibrate( new long[]{500,200,500,200}, -1); //第一个｛｝里面是节奏数组， 第二个参数是重复次数，-1为不重复，非-1从pattern的指定下标开始重复
+        boolean isAllowVibrate = CustomApplication.getInstance().getSpUtil().isAllowVibrate();
+        if(isAllowVibrate) {
+            mVibrator.vibrate(new long[]{500, 200, 500, 200}, -1); //第一个｛｝里面是节奏数组， 第二个参数是重复次数，-1为不重复，非-1从pattern的指定下标开始重复
+        }
     }
 
     @Override

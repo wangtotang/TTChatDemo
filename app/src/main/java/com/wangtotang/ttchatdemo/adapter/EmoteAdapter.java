@@ -15,6 +15,7 @@ import java.util.List;
  * Created by Wangto Tang on 2015/3/31.
  */
 public class EmoteAdapter extends BaseArrayListAdapter {
+
     public EmoteAdapter(Context context, List<FaceText> datas) {
         super(context, datas);
     }

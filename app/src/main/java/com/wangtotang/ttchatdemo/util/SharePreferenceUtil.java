@@ -23,11 +23,6 @@ public class SharePreferenceUtil {
         return mSharedPreferences.getBoolean(SHARED_KEY_NOTIFY, true);
     }
 
-    public void setPushNotifyEnable(boolean isChecked) {
-        editor.putBoolean(SHARED_KEY_NOTIFY, isChecked);
-        editor.commit();
-    }
-
     // 允许声音
     public boolean isAllowVoice() {
         return mSharedPreferences.getBoolean(SHARED_KEY_VOICE, true);

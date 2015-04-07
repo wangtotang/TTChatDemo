@@ -9,8 +9,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Toast;
 
-import com.bmob.utils.BmobLog;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,15 +37,6 @@ public abstract class  BaseListAdapter<E> extends BaseAdapter{
         notifyDataSetChanged();
     }
 
-    public void addAll(List<E> list) {
-        this.list.addAll(list);
-        notifyDataSetChanged();
-    }
-
-    public void remove(int position) {
-        this.list.remove(position);
-        notifyDataSetChanged();
-    }
 
     public BaseListAdapter(Context context, List<E> list) {
         super();
@@ -93,9 +82,9 @@ public abstract class  BaseListAdapter<E> extends BaseAdapter{
                     inView.setOnClickListener(new View.OnClickListener() {
 
                         public void onClick(View v) {
-                            inviewListener.OnClickListener(itemV, v, position,
-                                    valuesMap);
+                            inviewListener.OnClickListener(itemV, v, position,valuesMap);
                         }
+
                     });
                 }
             }
@@ -110,8 +99,7 @@ public abstract class  BaseListAdapter<E> extends BaseAdapter{
     }
 
     public interface onInternalClickListener {
-        public void OnClickListener(View parentV, View v, Integer position,
-                                    Object values);
+        public void OnClickListener(View parentV, View v, Integer position,Object values);
     }
 
     Toast mToast;
@@ -135,12 +123,4 @@ public abstract class  BaseListAdapter<E> extends BaseAdapter{
         }
     }
 
-    /**
-     * 打Log ShowLog
-     * @return void
-     * @throws
-     */
-    public void ShowLog(String msg) {
-        BmobLog.i(msg);
-    }
 }

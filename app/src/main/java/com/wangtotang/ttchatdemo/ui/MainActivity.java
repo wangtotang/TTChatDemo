@@ -21,7 +21,6 @@ import com.wangtotang.ttchatdemo.ui.view.SettingFragment;
 
 import cn.bmob.im.BmobChat;
 import cn.bmob.im.BmobChatManager;
-import cn.bmob.im.BmobNotifyManager;
 import cn.bmob.im.bean.BmobInvitation;
 import cn.bmob.im.bean.BmobMsg;
 import cn.bmob.im.config.BmobConfig;
@@ -47,7 +46,6 @@ public class MainActivity extends CheckActivity implements EventListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //开启定时检测服务（单位为秒）-在这里检测后台是否还有未读的消息，有的话就取出来
-        //如果你觉得检测服务比较耗流量和电量，你也可以去掉这句话-同时还有onDestory方法里面的stopPollService方法
 		BmobChat.getInstance(this).startPollService(30);
         //开启广播接收器
         initNewMessageBroadCast();
@@ -193,7 +191,7 @@ public class MainActivity extends CheckActivity implements EventListener {
             //刷新界面
             refreshNewMsg(null);
             // 记得把广播给终结掉
-            abortBroadcast();
+            //abortBroadcast();
         }
     }
 
@@ -250,11 +248,6 @@ public class MainActivity extends CheckActivity implements EventListener {
             if(contactFragment != null){
                 contactFragment.refresh();
             }
-        }else{
-            //同时提醒通知
-            String tickerText = message.getFromname()+"请求添加好友";
-            boolean isAllowVibrate = CustomApplication.getInstance().getSpUtil().isAllowVibrate();
-            BmobNotifyManager.getInstance(this).showNotify(isAllow,isAllowVibrate,R.drawable.ic_launcher, tickerText, message.getFromname(), tickerText.toString(),NewFriendActivity.class);
         }
     }
 

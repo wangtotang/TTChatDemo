@@ -5,32 +5,22 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bmob.utils.BmobLog;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.wangtotang.ttchatdemo.R;
 import com.wangtotang.ttchatdemo.bean.User;
 import com.wangtotang.ttchatdemo.config.Config;
-import com.wangtotang.ttchatdemo.manager.CustomApplication;
-import com.wangtotang.ttchatdemo.ui.view.TipsDialog;
-import com.wangtotang.ttchatdemo.util.CollectionUtil;
 import com.wangtotang.ttchatdemo.util.ImageLoadOptions;
 import com.wangtotang.ttchatdemo.util.PhotoUtil;
 
@@ -54,30 +44,20 @@ import cn.bmob.v3.listener.UploadFileListener;
  */
 public class SetMyInfoActivity extends CheckActivity implements View.OnClickListener {
 
-    TextView tv_set_name, tv_set_nick, tv_set_gender;
+    TextView  tv_set_nick, tv_set_gender;
     ImageView iv_set_avator, iv_arraw, iv_nickarraw;
     LinearLayout layout_all;
 
-    Button btn_chat, btn_back, btn_add_friend;
-    RelativeLayout layout_head, layout_nick, layout_gender, layout_black_tips;
+    Button btn_chat, btn_add_friend;
+    RelativeLayout layout_head, layout_nick, layout_gender;
     String path;
     String from = "";
     String username = "";
-    RelativeLayout layout_choose;
-    RelativeLayout layout_photo;
-    PopupWindow avatorPop;
     User user;
-    public String filePath = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // 因为魅族手机下面有三个虚拟的导航按钮，需要将其隐藏掉，不然会遮掉拍照和相册两个按钮，且在setContentView之前调用才能生效
-        int currentapiVersion = android.os.Build.VERSION.SDK_INT;
-        if (currentapiVersion >= 14) {
-            getWindow().getDecorView().setSystemUiVisibility(
-                    View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
-        }
         setContentView(R.layout.activity_set_info);
         from = getIntent().getStringExtra("from");//me add other
         username = getIntent().getStringExtra("username");
@@ -89,20 +69,15 @@ public class SetMyInfoActivity extends CheckActivity implements View.OnClickList
         iv_set_avator = (ImageView) findViewById(R.id.iv_set_avator);
         iv_arraw = (ImageView) findViewById(R.id.iv_arraw);
         iv_nickarraw = (ImageView) findViewById(R.id.iv_nickarraw);
-        tv_set_name = (TextView) findViewById(R.id.tv_set_name);
         tv_set_nick = (TextView) findViewById(R.id.tv_set_nick);
         layout_head = (RelativeLayout) findViewById(R.id.layout_head);
         layout_nick = (RelativeLayout) findViewById(R.id.layout_nick);
         layout_gender = (RelativeLayout) findViewById(R.id.layout_gender);
-        // 黑名单提示语
-        layout_black_tips = (RelativeLayout) findViewById(R.id.layout_black_tips);
         tv_set_gender = (TextView) findViewById(R.id.tv_set_gender);
         btn_chat = (Button) findViewById(R.id.btn_chat);
-        btn_back = (Button) findViewById(R.id.btn_back);
         btn_add_friend = (Button) findViewById(R.id.btn_add_friend);
         btn_add_friend.setEnabled(false);
         btn_chat.setEnabled(false);
-        btn_back.setEnabled(false);
         if (from.equals("me")) {
             initTopBarForLeft("个人资料");
             layout_head.setOnClickListener(this);
@@ -110,33 +85,20 @@ public class SetMyInfoActivity extends CheckActivity implements View.OnClickList
             layout_gender.setOnClickListener(this);
             iv_nickarraw.setVisibility(View.VISIBLE);
             iv_arraw.setVisibility(View.VISIBLE);
-            btn_back.setVisibility(View.GONE);
             btn_chat.setVisibility(View.GONE);
             btn_add_friend.setVisibility(View.GONE);
         } else {
             initTopBarForLeft("详细资料");
             iv_nickarraw.setVisibility(View.INVISIBLE);
             iv_arraw.setVisibility(View.INVISIBLE);
-            //不管对方是不是你的好友，均可以发送消息--BmobIM_V1.1.2修改
             btn_chat.setVisibility(View.VISIBLE);
             btn_chat.setOnClickListener(this);
             if (from.equals("add")) {// 从附近的人列表添加好友--因为获取附近的人的方法里面有是否显示好友的情况，因此在这里需要判断下这个用户是否是自己的好友
                 if (mApplication.getContactList().containsKey(username)) {// 是好友
-//					btn_chat.setVisibility(View.VISIBLE);
-//					btn_chat.setOnClickListener(this);
-                    btn_back.setVisibility(View.VISIBLE);
-                    btn_back.setOnClickListener(this);
                 } else {
-//					btn_chat.setVisibility(View.GONE);
-                    btn_back.setVisibility(View.GONE);
                     btn_add_friend.setVisibility(View.VISIBLE);
                     btn_add_friend.setOnClickListener(this);
                 }
-            } else {// 查看他人
-//				btn_chat.setVisibility(View.VISIBLE);
-//				btn_chat.setOnClickListener(this);
-                btn_back.setVisibility(View.VISIBLE);
-                btn_back.setOnClickListener(this);
             }
             initOtherData(username);
         }
@@ -159,9 +121,6 @@ public class SetMyInfoActivity extends CheckActivity implements View.OnClickList
                 break;
             case R.id.layout_gender:// 性别
                 showSexChooseDialog();
-                break;
-            case R.id.btn_back:// 黑名单
-                showBlackDialog(user.getUsername());
                 break;
             case R.id.btn_add_friend://添加好友
                 addFriend();
@@ -189,7 +148,6 @@ public class SetMyInfoActivity extends CheckActivity implements View.OnClickList
                     user = arg0.get(0);
                     updateUser(user);
                     btn_chat.setEnabled(true);
-                    btn_back.setEnabled(true);
                     btn_add_friend.setEnabled(true);
                 } else {
                     showLog("onSuccess 查无此人");
@@ -201,19 +159,8 @@ public class SetMyInfoActivity extends CheckActivity implements View.OnClickList
     private void updateUser(User user) {
         // 更改
         refreshAvatar(user.getAvatar());
-        tv_set_name.setText(user.getUsername());
         tv_set_nick.setText(user.getNick());
         tv_set_gender.setText(user.getSex() == true ? "男" : "女");
-        // 检测是否为黑名单用户
-        if (from.equals("other")) {
-            if (BmobDB.create(this).isBlackUser(user.getUsername())) {
-                btn_back.setVisibility(View.GONE);
-                layout_black_tips.setVisibility(View.VISIBLE);
-            } else {
-                btn_back.setVisibility(View.VISIBLE);
-                layout_black_tips.setVisibility(View.GONE);
-            }
-        }
     }
 
     /**
@@ -234,74 +181,12 @@ public class SetMyInfoActivity extends CheckActivity implements View.OnClickList
 
 
     private void showAvatarPop() {
-        View view = LayoutInflater.from(this).inflate(R.layout.pop_showavator,
-                null);
-        layout_choose = (RelativeLayout) view.findViewById(R.id.layout_choose);
-        layout_photo = (RelativeLayout) view.findViewById(R.id.layout_photo);
-        layout_photo.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View arg0) {
-                showLog("点击拍照");
-                layout_choose.setBackgroundColor(getResources().getColor(
-                        R.color.base_color_text_white));
-                layout_photo.setBackgroundDrawable(getResources().getDrawable(
-                        R.drawable.pop_bg_press));
-                File dir = new File(Config.MyAvatarDir);
-                if (!dir.exists()) {
-                    dir.mkdirs();
-                }
-                // 原图
-                File file = new File(dir, new SimpleDateFormat("yyMMddHHmmss")
-                        .format(new Date()));
-                filePath = file.getAbsolutePath();// 获取相片的保存路径
-                Uri imageUri = Uri.fromFile(file);
-
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-                startActivityForResult(intent,
-                        Config.REQUESTCODE_UPLOADAVATAR_CAMERA);
-            }
-        });
-        layout_choose.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View arg0) {
-                showLog("点击相册");
-                layout_photo.setBackgroundColor(getResources().getColor(
-                        R.color.base_color_text_white));
-                layout_choose.setBackgroundDrawable(getResources().getDrawable(
-                        R.drawable.pop_bg_press));
                 Intent intent = new Intent(Intent.ACTION_PICK, null);
                 intent.setDataAndType(
                         MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
                 startActivityForResult(intent,
                        Config.REQUESTCODE_UPLOADAVATAR_LOCATION);
             }
-        });
-
-        avatorPop = new PopupWindow(view, mScreenWidth, 600);
-        avatorPop.setTouchInterceptor(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_OUTSIDE) {
-                    avatorPop.dismiss();
-                    return true;
-                }
-                return false;
-            }
-        });
-
-        avatorPop.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
-        avatorPop.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
-        avatorPop.setTouchable(true);
-        avatorPop.setFocusable(true);
-        avatorPop.setOutsideTouchable(true);
-        avatorPop.setBackgroundDrawable(new BitmapDrawable());
-        // 动画效果 从底部弹起
-        avatorPop.setAnimationStyle(R.style.Animations_GrowFromBottom);
-        avatorPop.showAtLocation(layout_all, Gravity.BOTTOM, 0, 0);
-    }
 
     /**
      * @Title: startImageAction
@@ -330,33 +215,11 @@ public class SetMyInfoActivity extends CheckActivity implements View.OnClickList
         startActivityForResult(intent, requestCode);
     }
 
-    Bitmap newBitmap;
-    boolean isFromCamera = false;// 区分拍照旋转
-    int degree = 0;
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
-            case Config.REQUESTCODE_UPLOADAVATAR_CAMERA:// 拍照修改头像
-                if (resultCode == RESULT_OK) {
-                    if (!Environment.getExternalStorageState().equals(
-                            Environment.MEDIA_MOUNTED)) {
-                        showToast("SD不可用");
-                        return;
-                    }
-                    isFromCamera = true;
-                    File file = new File(filePath);
-                    degree = PhotoUtil.readPictureDegree(file.getAbsolutePath());
-                    Log.i("life", "拍照后的角度：" + degree);
-                    startImageAction(Uri.fromFile(file), 200, 200,
-                            Config.REQUESTCODE_UPLOADAVATAR_CROP, true);
-                }
-                break;
             case Config.REQUESTCODE_UPLOADAVATAR_LOCATION:// 本地修改头像
-                if (avatorPop != null) {
-                    avatorPop.dismiss();
-                }
                 Uri uri = null;
                 if (data == null) {
                     return;
@@ -367,7 +230,6 @@ public class SetMyInfoActivity extends CheckActivity implements View.OnClickList
                         showToast("SD不可用");
                         return;
                     }
-                    isFromCamera = false;
                     uri = data.getData();
                     startImageAction(uri, 200, 200,
                             Config.REQUESTCODE_UPLOADAVATAR_CROP, true);
@@ -377,17 +239,11 @@ public class SetMyInfoActivity extends CheckActivity implements View.OnClickList
 
                 break;
             case Config.REQUESTCODE_UPLOADAVATAR_CROP:// 裁剪头像返回
-                if (avatorPop != null) {
-                    avatorPop.dismiss();
-                }
                 if (data == null) {
-                    // Toast.makeText(this, "取消选择", Toast.LENGTH_SHORT).show();
                     return;
                 } else {
                     saveCropAvator(data);
                 }
-                // 初始化文件路径
-                filePath = "";
                 // 上传头像
                 uploadAvatar();
                 break;
@@ -398,7 +254,6 @@ public class SetMyInfoActivity extends CheckActivity implements View.OnClickList
     }
 
     private void uploadAvatar() {
-        BmobLog.i("头像地址：" + path);
         final BmobFile bmobFile = new BmobFile(new File(path));
         bmobFile.upload(SetMyInfoActivity.this, new UploadFileListener() {
 
@@ -451,9 +306,6 @@ public class SetMyInfoActivity extends CheckActivity implements View.OnClickList
             Log.i("life", "avatar - bitmap = " + bitmap);
             if (bitmap != null) {
                 bitmap = PhotoUtil.toRoundCorner(bitmap, 10);
-                if (isFromCamera && degree != 0) {
-                    bitmap = PhotoUtil.rotaingImageView(degree, bitmap);
-                }
                 iv_set_avator.setImageBitmap(bitmap);
                 // 保存图片
                 String filename = new SimpleDateFormat("yyMMddHHmmss")
@@ -492,7 +344,6 @@ public class SetMyInfoActivity extends CheckActivity implements View.OnClickList
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog,
                                                 int which) {
-                                BmobLog.i("点击的是" + sexs[which]);
                                 updateInfo(which);
                                 dialog.dismiss();
                             }
@@ -557,49 +408,9 @@ public class SetMyInfoActivity extends CheckActivity implements View.OnClickList
                     @Override
                     public void onFailure(int arg0, final String arg1) {
                         progress.dismiss();
-                        //showToast("发送请求成功，等待对方验证！");
                         showLog("发送请求失败:" + arg1);
                     }
                 });
     }
-
-    /**
-     * 显示黑名单提示框
-     *
-     * @Title: showBlackDialog
-     * @Description: TODO
-     * @param
-     * @return void
-     * @throws
-     */
-    private void showBlackDialog(final String username) {
-        TipsDialog dialog = new TipsDialog(this, "加入黑名单",
-                "加入黑名单，你将不再收到对方的消息，确定要继续吗？", "确定", true, true);
-        dialog.SetOnSuccessListener(new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialogInterface, int userId) {
-                // 添加到黑名单列表
-                userManager.addBlack(username, new UpdateListener() {
-
-                    @Override
-                    public void onSuccess() {
-                        showToast("黑名单添加成功!");
-                        btn_back.setVisibility(View.GONE);
-                        layout_black_tips.setVisibility(View.VISIBLE);
-                        // 重新设置下内存中保存的好友列表
-                        CustomApplication.getInstance().setContactList(CollectionUtil.list2map(BmobDB.create(SetMyInfoActivity.this).getContactList()));
-                    }
-
-                    @Override
-                    public void onFailure(int arg0, String arg1) {
-                        showToast("黑名单添加失败:" + arg1);
-                    }
-                });
-            }
-        });
-        // 显示确认对话框
-        dialog.show();
-        dialog = null;
-    }
-
 
 }

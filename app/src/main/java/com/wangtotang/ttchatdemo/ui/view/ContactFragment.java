@@ -11,7 +11,6 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -19,18 +18,13 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.wangtotang.ttchatdemo.R;
 import com.wangtotang.ttchatdemo.adapter.UserFriendAdapter;
 import com.wangtotang.ttchatdemo.bean.User;
 import com.wangtotang.ttchatdemo.manager.CustomApplication;
-import com.wangtotang.ttchatdemo.ui.AddFriendActivity;
-import com.wangtotang.ttchatdemo.ui.NewFriendActivity;
 import com.wangtotang.ttchatdemo.ui.SetMyInfoActivity;
 import com.wangtotang.ttchatdemo.util.CharacterParser;
 import com.wangtotang.ttchatdemo.util.CollectionUtil;
@@ -88,14 +82,7 @@ public class ContactFragment extends BaseFragment implements OnItemClickListener
     private void init() {
         characterParser = CharacterParser.getInstance();
         pinyinComparator = new PinyinComparator();
-        initTopBarForRight("联系人", R.drawable.base_action_bar_add_bg_selector,
-                new HeaderLayout.onRightImageButtonClickListener() {
-
-                    @Override
-                    public void onClick() {
-                        startAnimActivity(AddFriendActivity.class);
-                    }
-                });
+        initTopBarForOnlyTitle("联系人");
         initListView();
         initRightLetterView();
         initEditText();
@@ -190,26 +177,8 @@ public class ContactFragment extends BaseFragment implements OnItemClickListener
     }
 
 
-    ImageView iv_msg_tips;
-    TextView tv_new_name;
-    LinearLayout layout_new;//新朋友
-
     private void initListView() {
         list_friends= (ListView)findViewById(R.id.list_friends);
-        RelativeLayout headView = (RelativeLayout) mInflater.inflate(R.layout.include_new_friend, null);
-        iv_msg_tips = (ImageView)headView.findViewById(R.id.iv_msg_tips);
-        layout_new =(LinearLayout)headView.findViewById(R.id.layout_new);
-        layout_new.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View arg0) {
-                Intent intent = new Intent(getActivity(), NewFriendActivity.class);
-                intent.putExtra("from", "contact");
-                startAnimActivity(intent);
-            }
-        });
-
-        list_friends.addHeaderView(headView);
         userAdapter = new UserFriendAdapter(getActivity(), friends);
         list_friends.setAdapter(userAdapter);
         list_friends.setOnItemClickListener(this);
@@ -265,12 +234,6 @@ public class ContactFragment extends BaseFragment implements OnItemClickListener
      * @throws
      */
     private void queryMyfriends() {
-        //是否有新的好友请求
-        if(BmobDB.create(getActivity()).hasNewInvite()){
-            iv_msg_tips.setVisibility(View.VISIBLE);
-        }else{
-            iv_msg_tips.setVisibility(View.GONE);
-        }
         //在这里再做一次本地的好友数据库的检查，是为了本地好友数据库中已经添加了对方，但是界面却没有显示出来的问题
         // 重新设置下内存中保存的好友列表
         CustomApplication.getInstance().setContactList(CollectionUtil.list2map(BmobDB.create(getActivity()).getContactList()));
@@ -319,7 +282,7 @@ public class ContactFragment extends BaseFragment implements OnItemClickListener
 
     @Override
     public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-        User user = (User) userAdapter.getItem(position-1);
+        User user = (User) userAdapter.getItem(position);
         //先进入好友的详细资料页面
         Intent intent =new Intent(getActivity(),SetMyInfoActivity.class);
         intent.putExtra("from", "other");
@@ -331,7 +294,7 @@ public class ContactFragment extends BaseFragment implements OnItemClickListener
     @Override
     public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int position,
                                    long arg3) {
-        User user = (User) userAdapter.getItem(position-1);
+        User user = (User) userAdapter.getItem(position);
         showDeleteDialog(user);
         return true;
     }

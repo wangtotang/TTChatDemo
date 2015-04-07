@@ -42,16 +42,12 @@ import cn.bmob.im.inteface.DownloadListener;
  */
 public class MessageChatAdapter extends BaseListAdapter<BmobMsg>{
 
-    //8种Item的类型
     //文本
     private final int TYPE_RECEIVER_TXT = 0;
     private final int TYPE_SEND_TXT = 1;
     //图片
     private final int TYPE_SEND_IMAGE = 2;
     private final int TYPE_RECEIVER_IMAGE = 3;
-    //位置
-    private final int TYPE_SEND_LOCATION = 4;
-    private final int TYPE_RECEIVER_LOCATION = 5;
     //语音
     private final int TYPE_SEND_VOICE =6;
     private final int TYPE_RECEIVER_VOICE = 7;
@@ -84,8 +80,6 @@ public class MessageChatAdapter extends BaseListAdapter<BmobMsg>{
         BmobMsg msg = list.get(position);
         if(msg.getMsgType()==BmobConfig.TYPE_IMAGE){
             return msg.getBelongId().equals(currentObjectId) ? TYPE_SEND_IMAGE: TYPE_RECEIVER_IMAGE;
-        }else if(msg.getMsgType()==BmobConfig.TYPE_LOCATION){
-            return msg.getBelongId().equals(currentObjectId) ? TYPE_SEND_LOCATION: TYPE_RECEIVER_LOCATION;
         }else if(msg.getMsgType()==BmobConfig.TYPE_VOICE){
             return msg.getBelongId().equals(currentObjectId) ? TYPE_SEND_VOICE: TYPE_RECEIVER_VOICE;
         }else{
@@ -105,11 +99,6 @@ public class MessageChatAdapter extends BaseListAdapter<BmobMsg>{
                     mInflater.inflate(R.layout.item_chat_received_image, null)
                     :
                     mInflater.inflate(R.layout.item_chat_sent_image, null);
-        }else if(type==BmobConfig.TYPE_LOCATION){//位置类型
-            return getItemViewType(position) == TYPE_RECEIVER_LOCATION ?
-                    mInflater.inflate(R.layout.item_chat_received_location, null)
-                    :
-                    mInflater.inflate(R.layout.item_chat_sent_location, null);
         }else if(type==BmobConfig.TYPE_VOICE){//语音类型
             return getItemViewType(position) == TYPE_RECEIVER_VOICE ?
                     mInflater.inflate(R.layout.item_chat_received_voice, null)
@@ -138,8 +127,6 @@ public class MessageChatAdapter extends BaseListAdapter<BmobMsg>{
         //图片
         ImageView iv_picture = ViewHolder.get(convertView, R.id.iv_picture);
         final ProgressBar progress_load = ViewHolder.get(convertView, R.id.progress_load);//进度条
-        //位置
-        TextView tv_location = ViewHolder.get(convertView, R.id.tv_location);
         //语音
         final ImageView iv_voice = ViewHolder.get(convertView, R.id.iv_voice);
         //语音长度
@@ -160,7 +147,6 @@ public class MessageChatAdapter extends BaseListAdapter<BmobMsg>{
                 Intent intent =new Intent(mContext,SetMyInfoActivity.class);
                 if(getItemViewType(position) == TYPE_RECEIVER_TXT
                         ||getItemViewType(position) == TYPE_RECEIVER_IMAGE
-                        ||getItemViewType(position)==TYPE_RECEIVER_LOCATION
                         ||getItemViewType(position)==TYPE_RECEIVER_VOICE){
                     intent.putExtra("from", "other");
                     intent.putExtra("username", item.getBelongUsername());
@@ -174,8 +160,6 @@ public class MessageChatAdapter extends BaseListAdapter<BmobMsg>{
         tv_time.setText(TimeUtil.getChatTime(Long.parseLong(item.getMsgTime())));
 
         if(getItemViewType(position)==TYPE_SEND_TXT
-//				||getItemViewType(position)==TYPE_SEND_IMAGE//图片单独处理
-                ||getItemViewType(position)==TYPE_SEND_LOCATION
                 ||getItemViewType(position)==TYPE_SEND_VOICE){//只有自己发送的消息才有重发机制
             //状态描述
             if(item.getStatus()==BmobConfig.STATUS_SEND_SUCCESS){//发送成功
@@ -380,26 +364,22 @@ public class MessageChatAdapter extends BaseListAdapter<BmobMsg>{
 
                 @Override
                 public void onLoadingStarted(String imageUri, View view) {
-                    // TODO Auto-generated method stub
                     progress_load.setVisibility(View.VISIBLE);
                 }
 
                 @Override
                 public void onLoadingFailed(String imageUri, View view,
                                             FailReason failReason) {
-                    // TODO Auto-generated method stub
                     progress_load.setVisibility(View.INVISIBLE);
                 }
 
                 @Override
                 public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                    // TODO Auto-generated method stub
                     progress_load.setVisibility(View.INVISIBLE);
                 }
 
                 @Override
                 public void onLoadingCancelled(String imageUri, View view) {
-                    // TODO Auto-generated method stub
                     progress_load.setVisibility(View.INVISIBLE);
                 }
             });

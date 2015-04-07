@@ -80,14 +80,8 @@
         <activity android:name=".ui.LoginActivity" />
 
 
-
         <activity android:name=".ui.ImageBrowserActivity" />
 
-        <activity
-            android:name=".ui.AddFriendActivity"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
-
-        <activity android:name=".ui.NewFriendActivity" />
 
         <activity android:name=".ui.UpdateInfoActivity" />
 

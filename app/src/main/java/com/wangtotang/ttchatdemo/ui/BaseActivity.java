@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.wangtotang.ttchatdemo.R;
@@ -21,7 +22,6 @@ import cn.bmob.im.BmobChatManager;
 import cn.bmob.im.BmobUserManager;
 import cn.bmob.im.bean.BmobChatUser;
 import cn.bmob.im.config.BmobConfig;
-import cn.bmob.im.util.BmobLog;
 import cn.bmob.v3.listener.FindListener;
 
 /**
@@ -90,34 +90,7 @@ public class BaseActivity extends FragmentActivity {
      * @throws
      */
     public void showLog(String msg){
-        BmobLog.i("life", msg);
-    }
-
-    /**
-     * 只有title initTopBarLayoutByTitle
-     * @Title: initTopBarLayoutByTitle
-     * @throws
-     */
-    public void initTopBarForOnlyTitle(String titleName) {
-        mHeaderLayout = (HeaderLayout)findViewById(R.id.common_actionbar);
-        mHeaderLayout.init(HeaderLayout.HeaderStyle.DEFAULT_TITLE);
-        mHeaderLayout.setDefaultTitle(titleName);
-    }
-
-    /**
-     * 初始化标题栏-带左右按钮
-     * @return void
-     * @throws
-     */
-    public void initTopBarForBoth(String titleName, int rightDrawableId,String text,
-                                  HeaderLayout.onRightImageButtonClickListener listener) {
-        mHeaderLayout = (HeaderLayout)findViewById(R.id.common_actionbar);
-        mHeaderLayout.init(HeaderLayout.HeaderStyle.TITLE_DOUBLE_IMAGEBUTTON);
-        mHeaderLayout.setTitleAndLeftImageButton(titleName,
-                R.drawable.base_action_bar_back_bg_selector,
-                new OnLeftButtonClickListener());
-        mHeaderLayout.setTitleAndRightButton(titleName, rightDrawableId,text,
-                listener);
+        Log.i("life", msg);
     }
 
     public void initTopBarForBoth(String titleName, int rightDrawableId,
@@ -191,7 +164,6 @@ public class BaseActivity extends FragmentActivity {
      * @throws
      */
     public void updateUserInfos(){
-        //查询该用户的好友列表(这个好友列表是去除黑名单用户的哦),目前支持的查询好友个数为100，如需修改请在调用这个方法前设置BmobConfig.LIMIT_CONTACTS即可。
         //这里默认采取的是登陆成功之后即将好于列表存储到数据库中，并更新到当前内存中,
         userManager.queryCurrentContactList(new FindListener<BmobChatUser>() {
 

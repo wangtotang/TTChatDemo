@@ -10,6 +10,7 @@ import java.util.List;
  * Created by Wangto Tang on 2015/3/31.
  */
 public class EmoViewPagerAdapter extends PagerAdapter {
+
     private List<View> views;
 
     public EmoViewPagerAdapter(List<View> views){
@@ -35,6 +36,5 @@ public class EmoViewPagerAdapter extends PagerAdapter {
     @Override
     public void destroyItem(View arg0, int arg1, Object arg2) {
         ((ViewPager) arg0).removeView(views.get(arg1));
-
     }
 }

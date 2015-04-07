@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -36,7 +37,6 @@ import java.util.List;
 
 import cn.bmob.im.BmobUserManager;
 import cn.bmob.im.bean.BmobChatUser;
-import cn.bmob.im.util.BmobLog;
 import cn.bmob.v3.datatype.BmobGeoPoint;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.UpdateListener;
@@ -75,7 +75,7 @@ public class MapManager {
     public void initBaiduLocClient() {
         mBaiduMap = mMapView.getMap();
         //设置缩放级别
-        mBaiduMap.setMaxAndMinZoomLevel(18, 13);
+        mBaiduMap.setMaxAndMinZoomLevel(18,14);
         //普通地图
         mBaiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
         // 开启定位图层
@@ -154,7 +154,7 @@ public class MapManager {
         user.update(mContext,new UpdateListener() {
             @Override
             public void onSuccess() {
-                BmobLog.i("location","更新地址成功");
+                Log.i("location", "更新地址成功");
             }
             @Override
             public void onFailure(int code, String msg) {
@@ -203,6 +203,11 @@ public class MapManager {
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        final ProgressDialog progress = new ProgressDialog(
+                                mContext);
+                        progress.setMessage("正在查询...");
+                        progress.setCanceledOnTouchOutside(false);
+                        progress.show();
                         final String name = marker.getTitle();
                         userManager.queryUserByName(name,new FindListener<BmobChatUser>() {
                             @Override
@@ -211,6 +216,7 @@ public class MapManager {
                                 intent.putExtra("from", "add");
                                 intent.putExtra("username", name);
                                 mContext.startActivity(intent);*/
+                                progress.dismiss();
                                 Intent intent = new Intent(mContext,GameActivity.class);
                                 intent.putExtra("from", "add");
                                 intent.putExtra("username", name);
@@ -219,7 +225,7 @@ public class MapManager {
 
                             @Override
                             public void onError(int i, String s) {
-
+                                progress.dismiss();
                             }
                         });
 

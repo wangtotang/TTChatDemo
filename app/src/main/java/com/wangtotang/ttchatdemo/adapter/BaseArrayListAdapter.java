@@ -9,7 +9,6 @@ import android.widget.BaseAdapter;
 import com.wangtotang.ttchatdemo.bean.FaceText;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -20,13 +19,6 @@ public class BaseArrayListAdapter extends BaseAdapter {
     protected LayoutInflater mInflater;
     protected List<FaceText> mDatas = new ArrayList<FaceText>();
 
-    public BaseArrayListAdapter(Context context, FaceText... datas) {
-        mContext = context;
-        mInflater = LayoutInflater.from(context);
-        if (datas != null && datas.length > 0) {
-            mDatas = Arrays.asList(datas);
-        }
-    }
 
     public BaseArrayListAdapter(Context context, List<FaceText> datas) {
         mContext = context;

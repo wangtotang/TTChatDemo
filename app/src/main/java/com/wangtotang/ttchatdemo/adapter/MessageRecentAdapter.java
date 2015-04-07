@@ -39,7 +39,6 @@ public class MessageRecentAdapter extends ArrayAdapter<BmobRecent> implements Fi
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        // TODO Auto-generated method stub
         final BmobRecent item = mData.get(position);
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.item_conversation, parent, false);
@@ -66,12 +65,6 @@ public class MessageRecentAdapter extends ArrayAdapter<BmobRecent> implements Fi
             tv_recent_msg.setText(spannableString);
         }else if(item.getType()==BmobConfig.TYPE_IMAGE){
             tv_recent_msg.setText("[图片]");
-        }else if(item.getType()==BmobConfig.TYPE_LOCATION){
-            String all =item.getMessage();
-            if(all!=null &&!all.equals("")){//位置类型的信息组装格式：地理位置&维度&经度
-                String address = all.split("&")[0];
-                tv_recent_msg.setText("[位置]"+address);
-            }
         }else if(item.getType()==BmobConfig.TYPE_VOICE){
             tv_recent_msg.setText("[语音]");
         }

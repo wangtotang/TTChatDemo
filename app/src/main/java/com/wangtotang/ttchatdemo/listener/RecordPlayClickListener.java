@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.wangtotang.ttchatdemo.R;
+import com.wangtotang.ttchatdemo.config.Config;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -35,15 +36,13 @@ public class RecordPlayClickListener implements View.OnClickListener {
 
     BmobUserManager userManager;
 
-    public RecordPlayClickListener(Context context, BmobMsg msg,
-                                   ImageView voice) {
+    public RecordPlayClickListener(Context context, BmobMsg msg, ImageView voice) {
         this.iv_voice = voice;
         this.message = msg;
         this.context = context;
         currentMsg = msg;
         currentPlayListener = this;
-        currentObjectId = BmobUserManager.getInstance(context)
-                .getCurrentUserObjectId();
+        currentObjectId = BmobUserManager.getInstance(context).getCurrentUserObjectId();
         userManager = BmobUserManager.getInstance(context);
     }
 
@@ -62,8 +61,7 @@ public class RecordPlayClickListener implements View.OnClickListener {
         if (!(new File(filePath).exists())) {
             return;
         }
-        AudioManager audioManager = (AudioManager) context
-                .getSystemService(Context.AUDIO_SERVICE);
+        AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
         mediaPlayer = new MediaPlayer();
         if (!isUseSpeaker) {
             audioManager.setMode(AudioManager.MODE_NORMAL);
@@ -75,39 +73,8 @@ public class RecordPlayClickListener implements View.OnClickListener {
             mediaPlayer.setAudioStreamType(AudioManager.STREAM_VOICE_CALL);
         }
 
-//		while (true) {
-//			try {
-//				mediaPlayer.reset();
-//				FileInputStream fis = new FileInputStream(new File(filePath));
-//				mediaPlayer.setDataSource(fis.getFD());
-//				mediaPlayer.prepare();
-//				break;
-//			} catch (IllegalArgumentException e) {
-//			} catch (IllegalStateException e) {
-//			} catch (IOException e) {
-//			}
-//		}
-//
-//		isPlaying = true;
-//		currentMsg = message;
-//		mediaPlayer.start();
-//		startRecordAnimation();
-//		mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-//
-//			@Override
-//			public void onCompletion(MediaPlayer mp) {
-//				// TODO Auto-generated method stub
-//				stopPlayRecord();
-//			}
-//
-//		});
-//        currentPlayListener = this;
-
         try {
             mediaPlayer.reset();
-            // 单独使用此方法会报错播放错误:setDataSourceFD failed.: status=0x80000000
-            // mediaPlayer.setDataSource(filePath);
-            // 因此采用此方式会避免这种错误
             FileInputStream fis = new FileInputStream(new File(filePath));
             mediaPlayer.setDataSource(fis.getFD());
             mediaPlayer.prepare();
@@ -130,12 +97,7 @@ public class RecordPlayClickListener implements View.OnClickListener {
 
                     });
             currentPlayListener = this;
-            // isPlaying = true;
-            // currentMsg = message;
-            // mediaPlayer.start();
-            // startRecordAnimation();
         } catch (Exception e) {
-            BmobLog.i("播放错误:" + e.getMessage());
         }
     }
 
@@ -166,7 +128,6 @@ public class RecordPlayClickListener implements View.OnClickListener {
      * @return void
      * @throws
      */
-    @SuppressWarnings("resource")
     private void startRecordAnimation() {
         if (message.getBelongId().equals(currentObjectId)) {
             iv_voice.setImageResource(R.anim.anim_chat_voice_right);
@@ -201,8 +162,7 @@ public class RecordPlayClickListener implements View.OnClickListener {
     public void onClick(View arg0) {
         if (isPlaying) {
             currentPlayListener.stopPlayRecord();
-            if (currentMsg != null
-                    && currentMsg.hashCode() == message.hashCode()) {
+            if (currentMsg != null && currentMsg.hashCode() == message.hashCode()) {
                 currentMsg = null;
                 return;
             }
@@ -213,22 +173,18 @@ public class RecordPlayClickListener implements View.OnClickListener {
             startPlayRecord(localPath, true);
         } else {// 如果是收到的消息，则需要先下载后播放
             String localPath = getDownLoadFilePath(message);
-            BmobLog.i("voice", "收到的语音存储的地址:" + localPath);
             startPlayRecord(localPath, true);
         }
     }
 
     public String getDownLoadFilePath(BmobMsg msg) {
-        String accountDir = BmobUtils.string2MD5(userManager
-                .getCurrentUserObjectId());
-        File dir = new File(BmobConfig.BMOB_VOICE_DIR + File.separator
-                + accountDir + File.separator + msg.getBelongId());
+        String accountDir = BmobUtils.string2MD5(userManager.getCurrentUserObjectId());
+        File dir = new File(Config.MyVoiceDir + File.separator + accountDir + File.separator + msg.getBelongId());
         if (!dir.exists()) {
             dir.mkdirs();
         }
         // 在当前用户的目录下面存放录音文件
-        File audioFile = new File(dir.getAbsolutePath() + File.separator
-                + msg.getMsgTime() + ".amr");
+        File audioFile = new File(dir.getAbsolutePath() + File.separator + msg.getMsgTime() + ".amr");
         try {
             if (!audioFile.exists()) {
                 audioFile.createNewFile();

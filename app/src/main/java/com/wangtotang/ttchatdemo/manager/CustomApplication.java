@@ -56,11 +56,8 @@ public class CustomApplication extends Application {
 
     /** 初始化ImageLoader */
     public static void initImageLoader(Context context) {
-        File cacheDir = StorageUtils.getOwnCacheDirectory(context,
-                "ttchatdemo/Cache");// 获取到缓存的目录地址
-        // 创建配置ImageLoader(所有的选项都是可选的,只使用那些你真的想定制)，这个可以设定在APPLACATION里面，设置为全局的配置参数
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
-                context)
+        File cacheDir = StorageUtils.getOwnCacheDirectory(context, "ttchatdemo/Cache");// 获取到缓存的目录地址
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
                 // 线程池内加载的数量
                 .threadPoolSize(3).threadPriority(Thread.NORM_PRIORITY - 2)
                 .memoryCache(new WeakMemoryCache())
@@ -69,10 +66,8 @@ public class CustomApplication extends Application {
                         // 将保存的时候的URI名称用MD5 加密
                 .tasksProcessingOrder(QueueProcessingType.LIFO)
                 .discCache(new UnlimitedDiscCache(cacheDir))// 自定义缓存路径
-                        // .defaultDisplayImageOptions(DisplayImageOptions.createSimple())
                 .writeDebugLogs() // Remove for release app
                 .build();
-        // Initialize ImageLoader with configuration.
         ImageLoader.getInstance().init(config);// 全局初始化此配置
     }
 
@@ -92,12 +87,6 @@ public class CustomApplication extends Application {
             mSpUtil = new SharePreferenceUtil(this, sharedName);
         }
         return mSpUtil;
-    }
-
-    public NotificationManager getNotificationManager() {
-        if (mNotificationManager == null)
-            mNotificationManager = (NotificationManager) getSystemService(android.content.Context.NOTIFICATION_SERVICE);
-        return mNotificationManager;
     }
 
     public synchronized MediaPlayer getMediaPlayer() {

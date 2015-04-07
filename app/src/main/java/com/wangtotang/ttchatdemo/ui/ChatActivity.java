@@ -13,7 +13,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.MediaStore;
 import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.Selection;
@@ -54,7 +53,6 @@ import com.wangtotang.ttchatdemo.ui.view.TipsDialog;
 import com.wangtotang.ttchatdemo.util.CommonUtil;
 import com.wangtotang.ttchatdemo.util.FaceTextUtil;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -93,7 +91,7 @@ public class ChatActivity extends CheckActivity implements OnClickListener,
 
     private ViewPager pager_emo;
 
-    private TextView tv_picture, tv_camera, tv_location;
+    private TextView tv_picture;
 
     // 语音有关
     RelativeLayout layout_record;
@@ -113,8 +111,6 @@ public class ChatActivity extends CheckActivity implements OnClickListener,
         // 组装聊天对象
         targetUser = (BmobChatUser) getIntent().getSerializableExtra("user");
         targetId = targetUser.getObjectId();
-//		BmobLog.i("聊天对象：" + targetUser.getUsername() + ",targetId = "
-//				+ targetId);
         //注册广播接收器
         initNewMessageBroadCast();
         initView();
@@ -295,7 +291,7 @@ public class ChatActivity extends CheckActivity implements OnClickListener,
                 R.layout.include_chat_voice_short, null);
         toast.setView(view);
         toast.setGravity(Gravity.CENTER, 0, 0);
-        toast.setDuration(50);
+        toast.setDuration(Toast.LENGTH_LONG);
         return toast;
     }
 
@@ -352,11 +348,7 @@ public class ChatActivity extends CheckActivity implements OnClickListener,
 
     private void initAddView() {
         tv_picture = (TextView) findViewById(R.id.tv_picture);
-        tv_camera = (TextView) findViewById(R.id.tv_camera);
-        tv_location = (TextView) findViewById(R.id.tv_location);
         tv_picture.setOnClickListener(this);
-        tv_location.setOnClickListener(this);
-        tv_camera.setOnClickListener(this);
     }
 
     private void initBottomView() {
@@ -604,16 +596,11 @@ public class ChatActivity extends CheckActivity implements OnClickListener,
                     }
 
                     @Override
-                    public void onSuccess() {
-                        ((BmobMsg) values)
-                                .setStatus(BmobConfig.STATUS_SEND_SUCCESS);
-                        parentV.findViewById(R.id.progress_load).setVisibility(
-                                View.INVISIBLE);
-                        parentV.findViewById(R.id.iv_fail_resend)
-                                .setVisibility(View.INVISIBLE);
+                    public void onSuccess() {((BmobMsg) values).setStatus(BmobConfig.STATUS_SEND_SUCCESS);
+                        parentV.findViewById(R.id.progress_load).setVisibility(View.INVISIBLE);
+                        parentV.findViewById(R.id.iv_fail_resend).setVisibility(View.INVISIBLE);
                         if (((BmobMsg) values).getMsgType() == BmobConfig.TYPE_VOICE) {
-                            parentV.findViewById(R.id.tv_send_status)
-                                    .setVisibility(View.GONE);
+                            parentV.findViewById(R.id.tv_send_status).setVisibility(View.GONE);
                             parentV.findViewById(R.id.tv_voice_length)
                                     .setVisibility(View.VISIBLE);
                         } else {
@@ -664,7 +651,7 @@ public class ChatActivity extends CheckActivity implements OnClickListener,
                 }
 
                 break;
-            case R.id.btn_chat_add:// 添加按钮-显示图片、拍照、位置
+            case R.id.btn_chat_add:// 添加按钮-显示图片
                 if (layout_more.getVisibility() == View.GONE) {
                     layout_more.setVisibility(View.VISIBLE);
                     layout_add.setVisibility(View.VISIBLE);
@@ -710,39 +697,12 @@ public class ChatActivity extends CheckActivity implements OnClickListener,
                 refreshMessage(message);
 
                 break;
-            case R.id.tv_camera:// 拍照
-                selectImageFromCamera();
-                break;
             case R.id.tv_picture:// 图片
                 selectImageFromLocal();
                 break;
             default:
                 break;
         }
-    }
-
-
-    private String localCameraPath = "";// 拍照后得到的图片地址
-
-    /**
-     * 启动相机拍照 startCamera
-     *
-     * @Title: startCamera
-     * @throws
-     */
-    public void selectImageFromCamera() {
-        Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        File dir = new File(Config.BMOB_PICTURE_PATH);
-        if (!dir.exists()) {
-            dir.mkdirs();
-        }
-        File file = new File(dir, String.valueOf(System.currentTimeMillis())
-                + ".jpg");
-        localCameraPath = file.getPath();
-        Uri imageUri = Uri.fromFile(file);
-        openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-        startActivityForResult(openCameraIntent,
-                Config.REQUESTCODE_TAKE_CAMERA);
     }
 
     /**
@@ -759,9 +719,7 @@ public class ChatActivity extends CheckActivity implements OnClickListener,
             intent = new Intent(Intent.ACTION_GET_CONTENT);
             intent.setType("image/*");
         } else {
-            intent = new Intent(
-                    Intent.ACTION_PICK,
-                    android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         }
         startActivityForResult(intent, Config.REQUESTCODE_TAKE_LOCAL);
     }
@@ -770,10 +728,6 @@ public class ChatActivity extends CheckActivity implements OnClickListener,
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
-                case Config.REQUESTCODE_TAKE_CAMERA:// 当取到值的时候才上传path路径下的图片到服务器
-                    showLog("本地图片的地址：" + localCameraPath);
-                    sendImageMessage(localCameraPath);
-                    break;
                 case Config.REQUESTCODE_TAKE_LOCAL:
                     if (data != null) {
                         Uri selectedImage = data.getData();
@@ -797,31 +751,6 @@ public class ChatActivity extends CheckActivity implements OnClickListener,
         }
     }
 
-    /**
-     * 发送位置信息
-     * @Title: sendLocationMessage
-     * @Description: TODO
-     * @param @param address
-     * @param @param latitude
-     * @param @param longtitude
-     * @return void
-     * @throws
-     */
-    private void sendLocationMessage(String address, double latitude,
-                                     double longtitude) {
-        if (layout_more.getVisibility() == View.VISIBLE) {
-            layout_more.setVisibility(View.GONE);
-            layout_add.setVisibility(View.GONE);
-            layout_emo.setVisibility(View.GONE);
-        }
-        // 组装BmobMessage对象
-        BmobMsg message = BmobMsg.createLocationSendMsg(this, targetId,
-                address, latitude, longtitude);
-        // 默认发送完成，将数据保存到本地消息表和最近会话表中
-        manager.sendTextMessage(targetUser, message);
-        // 刷新界面
-        refreshMessage(message);
-    }
 
     /**
      * 默认先上传本地图片，之后才显示出来 sendImageMessage
@@ -1064,7 +993,7 @@ public class ChatActivity extends CheckActivity implements OnClickListener,
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (layout_more.getVisibility() == 0) {
+            if (layout_more.getVisibility() == View.VISIBLE) {
                 layout_more.setVisibility(View.GONE);
                 return false;
             } else {

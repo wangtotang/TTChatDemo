@@ -26,7 +26,7 @@ public class User extends BmobChatUser{
     /**
      * 地理坐标
      */
-    private BmobGeoPoint location;//
+    private BmobGeoPoint location;
 
 
     public BmobGeoPoint getLocation() {

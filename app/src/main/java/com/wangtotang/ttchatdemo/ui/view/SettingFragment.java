@@ -14,6 +14,9 @@ import com.wangtotang.ttchatdemo.R;
 import com.wangtotang.ttchatdemo.manager.CustomApplication;
 import com.wangtotang.ttchatdemo.ui.LoginActivity;
 import com.wangtotang.ttchatdemo.ui.SetMyInfoActivity;
+import com.wangtotang.ttchatdemo.util.SharePreferenceUtil;
+
+import cn.bmob.im.BmobUserManager;
 
 /**
  * Created by Wangto Tang on 2015/3/29.
@@ -22,18 +25,14 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
 
     Button btn_logout;
     TextView tv_set_name;
-    RelativeLayout layout_info, rl_switch_notification, rl_switch_voice,
-            rl_switch_vibrate,layout_blacklist;
-
-    ImageView iv_open_notification, iv_close_notification, iv_open_voice,
-            iv_close_voice, iv_open_vibrate, iv_close_vibrate;
-
-    View view1,view2;
-
+    RelativeLayout layout_info, rl_switch_voice,rl_switch_vibrate;
+    ImageView  iv_open_voice,iv_close_voice, iv_open_vibrate, iv_close_vibrate;
+    SharePreferenceUtil mSharedUtil;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mSharedUtil = mApplication.getSpUtil();
     }
 
     @Override
@@ -46,39 +45,52 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initView();
+        initData();
     }
 
     private void initView() {
         initTopBarForOnlyTitle("设置");
-        //黑名单列表
-        layout_blacklist = (RelativeLayout) findViewById(R.id.layout_blacklist);
 
         layout_info = (RelativeLayout) findViewById(R.id.layout_info);
-        rl_switch_notification = (RelativeLayout) findViewById(R.id.rl_switch_notification);
         rl_switch_voice = (RelativeLayout) findViewById(R.id.rl_switch_voice);
         rl_switch_vibrate = (RelativeLayout) findViewById(R.id.rl_switch_vibrate);
-        rl_switch_notification.setOnClickListener(this);
         rl_switch_voice.setOnClickListener(this);
         rl_switch_vibrate.setOnClickListener(this);
 
-        iv_open_notification = (ImageView) findViewById(R.id.iv_open_notification);
-        iv_close_notification = (ImageView) findViewById(R.id.iv_close_notification);
         iv_open_voice = (ImageView) findViewById(R.id.iv_open_voice);
         iv_close_voice = (ImageView) findViewById(R.id.iv_close_voice);
         iv_open_vibrate = (ImageView) findViewById(R.id.iv_open_vibrate);
         iv_close_vibrate = (ImageView) findViewById(R.id.iv_close_vibrate);
-        view1 = (View) findViewById(R.id.view1);
-        view2 = (View) findViewById(R.id.view2);
 
         tv_set_name = (TextView) findViewById(R.id.tv_set_name);
         btn_logout = (Button) findViewById(R.id.btn_logout);
 
         btn_logout.setOnClickListener(this);
         layout_info.setOnClickListener(this);
-        layout_blacklist.setOnClickListener(this);
+
+        boolean isAllowVoice = mSharedUtil.isAllowVoice();
+        if (isAllowVoice) {
+            iv_open_voice.setVisibility(View.VISIBLE);
+            iv_close_voice.setVisibility(View.INVISIBLE);
+        } else {
+            iv_open_voice.setVisibility(View.INVISIBLE);
+            iv_close_voice.setVisibility(View.VISIBLE);
+        }
+        boolean isAllowVibrate = mSharedUtil.isAllowVibrate();
+        if (isAllowVibrate) {
+            iv_open_vibrate.setVisibility(View.VISIBLE);
+            iv_close_vibrate.setVisibility(View.INVISIBLE);
+        } else {
+            iv_open_vibrate.setVisibility(View.INVISIBLE);
+            iv_close_vibrate.setVisibility(View.VISIBLE);
+        }
 
     }
 
+    private void initData() {
+        tv_set_name.setText(BmobUserManager.getInstance(getActivity())
+                .getCurrentUser().getUsername());
+    }
 
     @Override
     public void onResume() {
@@ -97,6 +109,29 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
                 CustomApplication.getInstance().logout();
                 getActivity().finish();
                 startActivity(new Intent(getActivity(), LoginActivity.class));
+                break;
+            case R.id.rl_switch_voice:
+                if (iv_open_voice.getVisibility() == View.VISIBLE) {
+                    iv_open_voice.setVisibility(View.INVISIBLE);
+                    iv_close_voice.setVisibility(View.VISIBLE);
+                    mSharedUtil.setAllowVoiceEnable(false);
+                } else {
+                    iv_open_voice.setVisibility(View.VISIBLE);
+                    iv_close_voice.setVisibility(View.INVISIBLE);
+                    mSharedUtil.setAllowVoiceEnable(true);
+                }
+
+                break;
+            case R.id.rl_switch_vibrate:
+                if (iv_open_vibrate.getVisibility() == View.VISIBLE) {
+                    iv_open_vibrate.setVisibility(View.INVISIBLE);
+                    iv_close_vibrate.setVisibility(View.VISIBLE);
+                    mSharedUtil.setAllowVibrateEnable(false);
+                } else {
+                    iv_open_vibrate.setVisibility(View.VISIBLE);
+                    iv_close_vibrate.setVisibility(View.INVISIBLE);
+                    mSharedUtil.setAllowVibrateEnable(true);
+                }
                 break;
         }
     }
