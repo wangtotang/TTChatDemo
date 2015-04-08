@@ -39,7 +39,6 @@ public class MyMessageReceiver extends BroadcastReceiver{
     // 事件监听
     public static ArrayList<EventListener> ehList = new ArrayList<EventListener>();
 
-    public static final int NOTIFY_ID = 0x000;
     public static int mNewNum = 0;//
     BmobUserManager userManager;
     BmobChatUser currentUser;

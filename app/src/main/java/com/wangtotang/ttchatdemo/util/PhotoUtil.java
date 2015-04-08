@@ -19,21 +19,6 @@ import java.io.IOException;
 public class PhotoUtil {
 
     /**
-     * 回收垃圾 recycle
-     *
-     * @throws
-     */
-    public static void recycle(Bitmap bitmap) {
-        // 先判断是否已经回收
-        if (bitmap != null && !bitmap.isRecycled()) {
-            // 回收并且置为null
-            bitmap.recycle();
-            bitmap = null;
-        }
-        System.gc();
-    }
-
-    /**
      * saveBitmap
      *
      * @param @param filename---完整的路径格式-包含目录以及文件名

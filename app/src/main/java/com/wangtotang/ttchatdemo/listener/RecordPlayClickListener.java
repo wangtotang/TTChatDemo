@@ -16,8 +16,6 @@ import java.io.IOException;
 
 import cn.bmob.im.BmobUserManager;
 import cn.bmob.im.bean.BmobMsg;
-import cn.bmob.im.config.BmobConfig;
-import cn.bmob.im.util.BmobLog;
 import cn.bmob.im.util.BmobUtils;
 
 /**
@@ -33,7 +31,6 @@ public class RecordPlayClickListener implements View.OnClickListener {
     public static boolean isPlaying = false;
     public static RecordPlayClickListener currentPlayListener = null;
     static BmobMsg currentMsg = null;// 用于区分两个不同语音的播放
-
     BmobUserManager userManager;
 
     public RecordPlayClickListener(Context context, BmobMsg msg, ImageView voice) {
@@ -52,26 +49,18 @@ public class RecordPlayClickListener implements View.OnClickListener {
      * @Title: playVoice
      * @Description: TODO
      * @param @param filePath
-     * @param @param isUseSpeaker
      * @return void
      * @throws
      */
-    @SuppressWarnings("resource")
-    public void startPlayRecord(String filePath, boolean isUseSpeaker) {
+    public void startPlayRecord(String filePath) {
         if (!(new File(filePath).exists())) {
             return;
         }
         AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
         mediaPlayer = new MediaPlayer();
-        if (!isUseSpeaker) {
-            audioManager.setMode(AudioManager.MODE_NORMAL);
-            audioManager.setSpeakerphoneOn(true);
-            mediaPlayer.setAudioStreamType(AudioManager.STREAM_RING);
-        } else {
-            audioManager.setSpeakerphoneOn(false);// 关闭扬声器
-            audioManager.setMode(AudioManager.MODE_IN_CALL);
-            mediaPlayer.setAudioStreamType(AudioManager.STREAM_VOICE_CALL);
-        }
+        audioManager.setSpeakerphoneOn(false);// 关闭扬声器
+        audioManager.setMode(AudioManager.MODE_IN_CALL);
+        mediaPlayer.setAudioStreamType(AudioManager.STREAM_VOICE_CALL);
 
         try {
             mediaPlayer.reset();
@@ -130,9 +119,9 @@ public class RecordPlayClickListener implements View.OnClickListener {
      */
     private void startRecordAnimation() {
         if (message.getBelongId().equals(currentObjectId)) {
-            iv_voice.setImageResource(R.anim.anim_chat_voice_right);
+            iv_voice.setImageResource(R.drawable.anim_chat_voice_right);
         } else {
-            iv_voice.setImageResource(R.anim.anim_chat_voice_left);
+            iv_voice.setImageResource(R.drawable.anim_chat_voice_left);
         }
         anim = (AnimationDrawable) iv_voice.getDrawable();
         anim.start();
@@ -149,9 +138,9 @@ public class RecordPlayClickListener implements View.OnClickListener {
      */
     private void stopRecordAnimation() {
         if (message.getBelongId().equals(currentObjectId)) {
-            iv_voice.setImageResource(R.drawable.voice_left3);
-        } else {
             iv_voice.setImageResource(R.drawable.voice_right3);
+        } else {
+            iv_voice.setImageResource(R.drawable.voice_left3);
         }
         if (anim != null) {
             anim.stop();
@@ -167,13 +156,12 @@ public class RecordPlayClickListener implements View.OnClickListener {
                 return;
             }
         }
-        BmobLog.i("voice", "点击事件");
         if (message.getBelongId().equals(currentObjectId)) {// 如果是自己发送的语音消息，则播放本地地址
             String localPath = message.getContent().split("&")[0];
-            startPlayRecord(localPath, true);
+            startPlayRecord(localPath);
         } else {// 如果是收到的消息，则需要先下载后播放
             String localPath = getDownLoadFilePath(message);
-            startPlayRecord(localPath, true);
+            startPlayRecord(localPath);
         }
     }
 

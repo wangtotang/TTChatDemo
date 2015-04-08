@@ -203,8 +203,7 @@ public class MessageChatAdapter extends BaseListAdapter<BmobMsg>{
         switch (item.getMsgType()) {
             case BmobConfig.TYPE_TEXT:
                 try {
-                    SpannableString spannableString = FaceTextUtil
-                            .toSpannableString(mContext, text);
+                    SpannableString spannableString = FaceTextUtil.toSpannableString(mContext, text);
                     tv_message.setText(spannableString);
                 } catch (Exception e) {
                 }

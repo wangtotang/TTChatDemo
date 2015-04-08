@@ -7,13 +7,13 @@ public class Config {
 
     public static String applicationId = "5bc8e0abb17c69b202e203ae58cfe23d";
     /**
-     * 我的头像保存目录
+     * 我的语音保存目录
      */
-    public static String MyVoiceDir = "/sdcard/ttchatdemo/voice/";
+    public static String MyVoiceDir = "/sdcard/ttChat/voice";
     /**
      * 我的头像保存目录
      */
-    public static String MyAvatarDir = "/sdcard/ttchatdemo/avatar/";
+    public static String MyAvatarDir = "/sdcard/ttChat/avatar/";
     public static final int REQUESTCODE_UPLOADAVATAR_LOCATION = 2;//本地相册修改头像
     public static final int REQUESTCODE_UPLOADAVATAR_CROP = 3;//系统裁剪头像
     public static final int REQUESTCODE_TAKE_LOCAL = 0x000002;//本地图片

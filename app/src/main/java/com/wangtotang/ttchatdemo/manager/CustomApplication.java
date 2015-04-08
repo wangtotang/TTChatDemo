@@ -56,7 +56,7 @@ public class CustomApplication extends Application {
 
     /** 初始化ImageLoader */
     public static void initImageLoader(Context context) {
-        File cacheDir = StorageUtils.getOwnCacheDirectory(context, "ttchatdemo/Cache");// 获取到缓存的目录地址
+        File cacheDir = StorageUtils.getOwnCacheDirectory(context, "ttChat/cache");// 获取到缓存的目录地址
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
                 // 线程池内加载的数量
                 .threadPoolSize(3).threadPriority(Thread.NORM_PRIORITY - 2)

@@ -50,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/add_avator"
                 android:scaleType="fitCenter"
-                android:src="@drawable/voice_left3" />
+                android:src="@drawable/voice_right3" />
         </LinearLayout>
 
         <TextView

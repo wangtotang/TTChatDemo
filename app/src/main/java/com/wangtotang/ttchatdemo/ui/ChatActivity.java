@@ -67,7 +67,6 @@ import cn.bmob.im.db.BmobDB;
 import cn.bmob.im.inteface.EventListener;
 import cn.bmob.im.inteface.OnRecordChangeListener;
 import cn.bmob.im.inteface.UploadListener;
-import cn.bmob.im.util.BmobLog;
 import cn.bmob.v3.listener.PushListener;
 /**
  * Created by Wangto Tang on 2015/3/31.
@@ -119,7 +118,7 @@ public class ChatActivity extends CheckActivity implements OnClickListener,
     private void initRecordManager(){
         // 语音相关管理器
         recordManager = BmobRecordManager.getInstance(this);
-        // 设置音量大小监听--在这里开发者可以自己实现：当剩余10秒情况下的给用户的提示，类似微信的语音那样
+        // 设置音量大小监听
         recordManager.setOnRecordChangeListener(new OnRecordChangeListener() {
 
             @Override
@@ -129,7 +128,6 @@ public class ChatActivity extends CheckActivity implements OnClickListener,
 
             @Override
             public void onTimeChanged(int recordTime, String localPath) {
-                BmobLog.i("voice", "已录音长度:" + recordTime);
                 if (recordTime >= BmobRecordManager.MAX_RECORD_TIME) {// 1分钟结束，发送消息
                     // 需要重置按钮
                     btn_speak.setPressed(false);
@@ -142,8 +140,7 @@ public class ChatActivity extends CheckActivity implements OnClickListener,
                     handler.postDelayed(new Runnable() {
 
                         @Override
-                        public void run() {
-                            btn_speak.setClickable(true);
+                        public void run() { btn_speak.setClickable(true);
                         }
                     }, 1000);
                 }else{
@@ -222,15 +219,11 @@ public class ChatActivity extends CheckActivity implements OnClickListener,
                     try {
                         if (event.getY() < 0) {// 放弃录音
                             recordManager.cancelRecording();
-                            BmobLog.i("voice", "放弃发送语音");
                         } else {
                             int recordTime = recordManager.stopRecording();
                             if (recordTime > 1) {
                                 // 发送语音文件
-                                BmobLog.i("voice", "发送语音");
-                                sendVoiceMessage(
-                                        recordManager.getRecordFilePath(targetId),
-                                        recordTime);
+                                sendVoiceMessage(recordManager.getRecordFilePath(targetId),recordTime);
                             } else {// 录音时间过短，则提示录音过短的提示
                                 layout_record.setVisibility(View.GONE);
                                 showShortToast().show();
@@ -382,7 +375,6 @@ public class ChatActivity extends CheckActivity implements OnClickListener,
             @Override
             public void onTextChanged(CharSequence s, int start, int before,
                                       int count) {
-                // TODO Auto-generated method stub
                 if (!TextUtils.isEmpty(s)) {
                     btn_chat_send.setVisibility(View.VISIBLE);
                     btn_chat_keyboard.setVisibility(View.GONE);
@@ -862,7 +854,6 @@ public class ChatActivity extends CheckActivity implements OnClickListener,
                 if (!uid.equals(targetId))// 如果不是当前正在聊天对象的消息，不处理
                     return;
                 mAdapter.add(m);
-                // 定位
                 mListView.setSelection(mAdapter.getCount() - 1);
                 //取消当前聊天对象的未读标示
                 BmobDB.create(ChatActivity.this).resetUnread(targetId);
@@ -900,7 +891,6 @@ public class ChatActivity extends CheckActivity implements OnClickListener,
                     return;
                 //添加到当前页面
                 mAdapter.add(msg);
-                // 定位
                 mListView.setSelection(mAdapter.getCount() - 1);
                 //取消当前聊天对象的未读标示
                 BmobDB.create(ChatActivity.this).resetUnread(targetId);
@@ -972,7 +962,6 @@ public class ChatActivity extends CheckActivity implements OnClickListener,
             public void run() {
                 MsgPagerNum++;
                 int total = BmobDB.create(ChatActivity.this).queryChatTotalCount(targetId);
-                BmobLog.i("记录总数：" + total);
                 int currents = mAdapter.getCount();
                 if (total <= currents) {
                     showToast("聊天记录加载完了哦!");
