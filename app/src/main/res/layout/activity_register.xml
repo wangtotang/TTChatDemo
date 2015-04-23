@@ -10,78 +10,85 @@
         android:id="@+id/common_actionbar"
         layout="@layout/include_action_bar" />
 
-    <LinearLayout android:layout_height="88dp"
-        style="@style/Register_Input">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <LinearLayout
+            style="@style/Register_Input"
+            android:layout_weight="1000"
+            android:layout_gravity="bottom">
 
-        <TextView
-            style="@style/Smile.TextView._Black"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:paddingLeft="10dp"
-            android:text="@string/login_avator"
-            android:textStyle="bold" />
+            <TextView
+                style="@style/Smile.TextView._Black"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:text="@string/login_nick"
+                android:textStyle="bold" />
 
-            <ImageView
-                android:id="@+id/iv_avatar"
-                style="@style/Smile.ImageView"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginLeft="40dp"
-                android:src="@drawable/default_head"
-                android:clickable="true"/>
+            <EditText
+                android:id="@+id/et_nick"
+                style="@style/Register_Edit"
+                android:paddingLeft="12dp"
+                android:hint="@string/login_nick_hint" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_avatar"
+            style="@style/Smile.ImageView"
+            android:layout_width="74dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:layout_marginTop="1dp"
+            android:layout_marginBottom="1dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/icon_avatar"
+            android:clickable="true"/>
 
     </LinearLayout>
+
 
     <LinearLayout style="@style/Register_Input" >
-
-        <TextView
-            style="@style/Smile.TextView._Black"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:paddingLeft="10dp"
-            android:text="@string/login_gender"
-            android:textStyle="bold" />
-        <RadioGroup
-            android:id="@+id/rg_gender"
-            android:contentDescription="性别"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/rb_gender_female"
+        <RelativeLayout
+            android:id="@+id/layout_gender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                style="@style/Smile.TextView._Black"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:text="@string/login_gender"
+                android:textStyle="bold" />
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="女"
-                android:checked="true"
-                android:layout_marginLeft="20dp"/>
+                android:orientation="horizontal"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:layout_centerVertical="true">
 
-            <RadioButton
-                android:id="@+id/rb_gender_male"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="男"
-                android:layout_marginLeft="20dp"/>
+                <TextView
+                    android:id="@+id/tv_gender"
+                    style="@style/Smile.TextView._Black"
+                    android:text="男"
+                    android:paddingRight="10dp"/>
 
-        </RadioGroup>
+                <ImageView
+                    style="@style/Smile.ImageView"
+                    android:layout_width="20dp"
+                    android:contentDescription="@string/action_settings"
+                    android:src="@drawable/register_bottom_arrow" />
+
+            </LinearLayout>
+        </RelativeLayout>
+
     </LinearLayout>
 
-    <LinearLayout style="@style/Register_Input" >
 
-        <TextView
-            style="@style/Smile.TextView._Black"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:paddingLeft="10dp"
-            android:text="@string/login_nick"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/et_nick"
-            style="@style/Register_Edit"
-            android:hint="@string/login_nick_hint" />
-    </LinearLayout>
 
     <LinearLayout style="@style/Register_Input" >
 
@@ -96,6 +103,7 @@
         <EditText
             android:id="@+id/et_username"
             style="@style/Register_Edit"
+            android:paddingLeft="12dp"
             android:hint="@string/login_username_hint" />
     </LinearLayout>
 
@@ -112,6 +120,7 @@
         <EditText
             android:id="@+id/et_password"
             style="@style/Register_Edit"
+            android:paddingLeft="12dp"
             android:inputType="textPassword"
             android:hint="@string/login_password_hint" />
     </LinearLayout>
@@ -130,6 +139,7 @@
             android:id="@+id/et_pwd_again"
             style="@style/Register_Edit"
             android:inputType="textPassword"
+            android:paddingLeft="12dp"
             android:hint="@string/login_pwd_again_hint" />
     </LinearLayout>
 

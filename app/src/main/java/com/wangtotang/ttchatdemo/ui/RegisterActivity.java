@@ -1,7 +1,9 @@
 package com.wangtotang.ttchatdemo.ui;
 
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -14,8 +16,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
+import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 import com.wangtotang.ttchatdemo.R;
 import com.wangtotang.ttchatdemo.bean.User;
@@ -25,7 +28,11 @@ import com.wangtotang.ttchatdemo.util.PhotoUtil;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import cn.bmob.v3.BmobInstallation;
 import cn.bmob.v3.datatype.BmobFile;
@@ -41,10 +48,11 @@ public class RegisterActivity extends BaseActivity {
     private EditText et_password;
     private EditText et_pwd_again;
     private Button btn_register;
-    private RadioGroup rg_gender;
     private ImageView iv_avatar;
-    String gender = "女";
+    TextView tv_gender;
+    String gender = "男";
     LinearLayout layout_register;
+    RelativeLayout layout_gender;
     String path;
     String url = null;
 
@@ -54,14 +62,12 @@ public class RegisterActivity extends BaseActivity {
         setContentView(R.layout.activity_register);
         initTopBarForLeft("注册");
 
-        rg_gender = (RadioGroup) findViewById(R.id.rg_gender);
-        rg_gender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        layout_gender = (RelativeLayout) findViewById(R.id.layout_gender);
+        tv_gender = (TextView) findViewById(R.id.tv_gender);
+        layout_gender.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                //根据ID获取RadioButton的实例
-                RadioButton rb = (RadioButton)findViewById(checkedId);
-               //更新文本内容，以符合选中项
-               gender = rb.getText().toString();
+            public void onClick(View v) {
+                showSexChooseDialog();
             }
         });
 
@@ -127,25 +133,25 @@ public class RegisterActivity extends BaseActivity {
         progress.setCanceledOnTouchOutside(false);
         progress.show();
         //注册的时候需要注意两点：1、User表中绑定设备id和type，2、设备表中绑定username字段
-        final User bu = new User();
+        final User user = new User();
         if(url!=null) {
-            bu.setAvatar(url);
+            user.setAvatar(url);
         }
-        bu.setSex(!"女".equals(gender));
-        bu.setNick(nick);
-        bu.setUsername(name);
-        bu.setPassword(password);
+        user.setSex(!"女".equals(gender));
+        user.setNick(nick);
+        user.setUsername(name);
+        user.setPassword(password);
         //将user和设备id进行绑定
-        bu.setDeviceType("android");
-        bu.setInstallId(BmobInstallation.getInstallationId(this));
-        bu.signUp(RegisterActivity.this, new SaveListener() {
+        user.setDeviceType("android");
+        user.setInstallId(BmobInstallation.getInstallationId(this));
+        user.signUp(RegisterActivity.this, new SaveListener() {
 
             @Override
             public void onSuccess() {
                 progress.dismiss();
                 showToast("注册成功");
                 // 将设备与username进行绑定
-                userManager.bindInstallationForRegister(bu.getUsername());
+                userManager.bindInstallationForRegister(user.getUsername());
                 //发广播通知登陆页面退出
                 sendBroadcast(new Intent(Config.ACTION_REGISTER_SUCCESS_FINISH));
                 // 启动主页
@@ -157,10 +163,42 @@ public class RegisterActivity extends BaseActivity {
 
             @Override
             public void onFailure(int arg0, String arg1) {
-                showToast("注册失败:" + arg1);
+                showToast("注册失败");
                 progress.dismiss();
             }
         });
+    }
+
+    Map<String,String> map1 = new HashMap<String,String>(){
+        {
+            put("gender","男");
+        }
+    };
+    Map<String,String> map2 = new HashMap<String,String>(){
+        {
+            put("gender","女");
+        }
+    };
+    List list = new ArrayList(){
+        {
+            add(map1);
+            add(map2);
+        }
+    };
+    private void showSexChooseDialog() {
+        SimpleAdapter listAdapter = new SimpleAdapter(this,list,R.layout.item_gender,new String[]{"gender"},new int[]{R.id.tv_gender});
+        new AlertDialog.Builder(this)
+                .setTitle("性别")
+                .setIcon(R.drawable.icon_gender)
+                .setSingleChoiceItems(listAdapter, 0,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                gender = (which == 0 ? "男" : "女");
+                                tv_gender.setText(gender);
+                                dialog.dismiss();
+                            }
+                        })
+                .show();
     }
 
     private void showAvatarPop() {

@@ -58,7 +58,7 @@
     <string name="picture">照片</string>
 
     <string name="near_people">摇一摇</string>
-    <string name="game_tip_type">解锁游戏类型:数字拼图</string>
+    <string name="game_tip_type">解锁游戏:数字拼图</string>
     <string name="game_tip_tips">游戏提示:从上到下,从左到右依次从小到大排序</string>
     <string name="game_tip_warning">贴心提醒:只有完成游戏,才可查看附近的人的信息</string>
 

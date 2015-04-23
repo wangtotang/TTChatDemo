@@ -108,8 +108,14 @@
             <TextView
                 android:id="@+id/tv_set_gender"
                 style="@style/Smile.TextView._Black"
-                android:layout_marginRight="20dp"
                 android:drawablePadding="10dp" />
+
+            <ImageView
+                android:id="@+id/iv_genderarraw"
+                style="@style/Smile.ImageView"
+                android:layout_width="20dp"
+                android:contentDescription="@string/action_settings"
+                android:src="@drawable/register_bottom_arrow" />
             
         </LinearLayout>
     </RelativeLayout>

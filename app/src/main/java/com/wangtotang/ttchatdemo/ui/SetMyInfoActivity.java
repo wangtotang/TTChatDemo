@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -26,8 +27,11 @@ import com.wangtotang.ttchatdemo.util.PhotoUtil;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import cn.bmob.im.BmobChatManager;
 import cn.bmob.im.config.BmobConfig;
@@ -45,7 +49,7 @@ import cn.bmob.v3.listener.UploadFileListener;
 public class SetMyInfoActivity extends CheckActivity implements View.OnClickListener {
 
     TextView  tv_set_nick, tv_set_gender;
-    ImageView iv_set_avator, iv_arraw, iv_nickarraw;
+    ImageView iv_set_avator, iv_arraw, iv_nickarraw,iv_genderarraw;
     LinearLayout layout_all;
 
     Button btn_chat, btn_add_friend;
@@ -69,6 +73,7 @@ public class SetMyInfoActivity extends CheckActivity implements View.OnClickList
         iv_set_avator = (ImageView) findViewById(R.id.iv_set_avator);
         iv_arraw = (ImageView) findViewById(R.id.iv_arraw);
         iv_nickarraw = (ImageView) findViewById(R.id.iv_nickarraw);
+        iv_genderarraw = (ImageView) findViewById(R.id.iv_genderarraw);
         tv_set_nick = (TextView) findViewById(R.id.tv_set_nick);
         layout_head = (RelativeLayout) findViewById(R.id.layout_head);
         layout_nick = (RelativeLayout) findViewById(R.id.layout_nick);
@@ -85,12 +90,14 @@ public class SetMyInfoActivity extends CheckActivity implements View.OnClickList
             layout_gender.setOnClickListener(this);
             iv_nickarraw.setVisibility(View.VISIBLE);
             iv_arraw.setVisibility(View.VISIBLE);
+            iv_genderarraw.setVisibility(View.VISIBLE);
             btn_chat.setVisibility(View.GONE);
             btn_add_friend.setVisibility(View.GONE);
         } else {
             initTopBarForLeft("详细资料");
             iv_nickarraw.setVisibility(View.INVISIBLE);
             iv_arraw.setVisibility(View.INVISIBLE);
+            iv_genderarraw.setVisibility(View.INVISIBLE);
             btn_chat.setVisibility(View.VISIBLE);
             btn_chat.setOnClickListener(this);
             if (from.equals("add")) {// 从附近的人列表添加好友--因为获取附近的人的方法里面有是否显示好友的情况，因此在这里需要判断下这个用户是否是自己的好友
@@ -335,20 +342,34 @@ public class SetMyInfoActivity extends CheckActivity implements View.OnClickList
         }
     }
 
-    String[] sexs = new String[]{ "男", "女" };
+    Map<String,String> map1 = new HashMap<String,String>(){
+        {
+            put("gender","男");
+        }
+    };
+    Map<String,String> map2 = new HashMap<String,String>(){
+        {
+            put("gender","女");
+        }
+    };
+    List list = new ArrayList(){
+        {
+            add(map1);
+            add(map2);
+        }
+    };
     private void showSexChooseDialog() {
+        SimpleAdapter listAdapter = new SimpleAdapter(this,list,R.layout.item_gender,new String[]{"gender"},new int[]{R.id.tv_gender});
         new AlertDialog.Builder(this)
-                .setTitle("单选框")
-                .setIcon(android.R.drawable.ic_dialog_info)
-                .setSingleChoiceItems(sexs, 0,
+                .setTitle("性别")
+                .setIcon(R.drawable.icon_gender)
+                .setSingleChoiceItems(listAdapter, 0,
                         new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog,
-                                                int which) {
+                            public void onClick(DialogInterface dialog, int which) {
                                 updateInfo(which);
                                 dialog.dismiss();
                             }
                         })
-                .setNegativeButton("取消", null)
                 .show();
     }
 

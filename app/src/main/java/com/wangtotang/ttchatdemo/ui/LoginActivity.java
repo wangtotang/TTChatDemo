@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.bmob.utils.BmobLog;
 import com.wangtotang.ttchatdemo.R;
 import com.wangtotang.ttchatdemo.bean.User;
 import com.wangtotang.ttchatdemo.config.Config;
@@ -121,7 +120,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             @Override
             public void onFailure(int errorcode, String arg0) {
                 progress.dismiss();
-                BmobLog.i(arg0);
                 showToast(arg0);
             }
         });

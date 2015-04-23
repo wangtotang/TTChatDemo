@@ -23,46 +23,50 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
                 android:text="@string/game_tip_type"
                 android:textColor="@color/abc_secondary_text_material_light"
                 android:textSize="14sp" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_marginTop="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:text="@string/game_tip_tips"
-                android:textColor="@color/abc_secondary_text_material_light"
-                android:textSize="14sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_marginTop="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:text="@string/game_tip_warning"
-                android:textColor="@color/abc_secondary_text_material_light"
-                android:textSize="14sp" />
-        </LinearLayout>
-
         <RelativeLayout
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="26dp"
             android:id="@+id/gamePanelContainer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center" />
+
+        <LinearLayout
+            android:layout_marginTop="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center_horizontal"
+            >
+            <LinearLayout
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/game_tip_tips"
+                    android:textColor="#ffb7b7b7"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/game_tip_warning"
+                    android:textColor="#ffb7b7b7"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+        </LinearLayout>
 
     </LinearLayout>
 
