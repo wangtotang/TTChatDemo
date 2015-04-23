@@ -17,7 +17,8 @@
         <LinearLayout
             style="@style/Register_Input"
             android:layout_weight="1000"
-            android:layout_gravity="bottom">
+            android:layout_gravity="bottom"
+            android:layout_height="60dp">
 
             <TextView
                 style="@style/Smile.TextView._Black"
@@ -105,6 +106,7 @@
             style="@style/Register_Edit"
             android:paddingLeft="12dp"
             android:hint="@string/login_username_hint" />
+
     </LinearLayout>
 
     <LinearLayout style="@style/Register_Input" >
